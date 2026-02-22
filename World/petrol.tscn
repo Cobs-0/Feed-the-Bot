@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cn7r7yw05nwcs"]
+
+[ext_resource type="Texture2D" uid="uid://1do4my6bjxqf" path="res://assets/Petrol.png" id="1_sgllm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lantern"]
+size = Vector2(50, 50)
+
+[node name="Petrol" type="Node2D" unique_id=1578377779]
+
+[node name="PetrolArea" type="Area2D" parent="." unique_id=1869556680]
+
+[node name="Sprite2D" type="Sprite2D" parent="PetrolArea" unique_id=752661375]
+texture_filter = 1
+position = Vector2(1, 0.25)
+scale = Vector2(0.89992183, 0.89992183)
+texture = ExtResource("1_sgllm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PetrolArea" unique_id=134995467]
+shape = SubResource("RectangleShape2D_lantern")

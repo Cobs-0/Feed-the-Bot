@@ -5,6 +5,7 @@ var player_in_range: bool = false
 
 func _ready() -> void:
 	interact_label = get_tree().root.find_child("InteractLabel", true, false)
+	
 
 func _input(event: InputEvent) -> void:
 	if player_in_range:

@@ -12,6 +12,7 @@ script = ExtResource("1_rx85m")
 [node name="Area2D" type="Area2D" parent="." unique_id=1823916137]
 
 [node name="FunnelSprite" type="Sprite2D" parent="Area2D" unique_id=169934463]
+texture_filter = 1
 position = Vector2(0, 30.855)
 scale = Vector2(0.07, 0.07)
 texture = ExtResource("2_rx85m")

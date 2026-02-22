@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://ct2l5fe0tckjj"]
+
+[ext_resource type="Script" uid="uid://cp42genruyodu" path="res://scripts/Item.gd" id="1_1dv6m"]
+[ext_resource type="Texture2D" uid="uid://58q6h7p4hcw7" path="res://assets/New/boulder1.png" id="2_1dv6m"]
+
+[resource]
+script = ExtResource("1_1dv6m")
+name = "Rock"
+texture = ExtResource("2_1dv6m")
+ai_dialogue = "Nice Shot!"
+visual_scale = 0.1

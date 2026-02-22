@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c856jox12fncy"]
+[gd_scene format=3 uid="uid://c856jox12fncy"]
 
 [ext_resource type="Script" uid="uid://bxxj8iglt8ihx" path="res://Npcs/artist.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://ddlfavgbwvflg" path="res://assets/Artist/Painting.png" id="1_txy1b"]
@@ -30,28 +30,30 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h1wyg"]
 size = Vector2(69, 72)
 
-[node name="Artist" type="Node2D"]
+[node name="Artist" type="Node2D" unique_id=1234227054]
 script = ExtResource("1_script")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1497827154]
 
-[node name="EaselSprite" type="Sprite2D" parent="Area2D"]
+[node name="EaselSprite" type="Sprite2D" parent="Area2D" unique_id=818082783]
+texture_filter = 1
 position = Vector2(27, -3)
 scale = Vector2(1.1875, 1.125)
 texture = ExtResource("1_txy1b")
 
-[node name="ArtistSprite" type="AnimatedSprite2D" parent="Area2D"]
+[node name="ArtistSprite" type="AnimatedSprite2D" parent="Area2D" unique_id=1743887071]
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_b5tpc")
 animation = &"Talk"
 autoplay = "Idle"
 frame = 1
 frame_progress = 0.59338576
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1010237328]
 position = Vector2(13.5, 1)
 shape = SubResource("RectangleShape2D_h1wyg")
 
-[node name="DialogueLabel" type="Label" parent="."]
+[node name="DialogueLabel" type="Label" parent="." unique_id=1594725132]
 offset_left = -100.0
 offset_top = -100.0
 offset_right = 140.0

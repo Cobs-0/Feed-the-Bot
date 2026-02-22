@@ -49,6 +49,7 @@ script = ExtResource("1_onrkg")
 [node name="PlayerArea" type="Area2D" parent="." unique_id=904387365]
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="PlayerArea" unique_id=1813233531]
+texture_filter = 1
 position = Vector2(-2.975, 6.17)
 scale = Vector2(0.045, 0.045)
 sprite_frames = SubResource("SpriteFrames_kb6p2")
@@ -56,11 +57,8 @@ animation = &"Idle"
 autoplay = "Idle"
 frame_progress = 0.5029348
 
-[node name="Camera2D" type="Camera2D" parent="PlayerArea/PlayerSprite" unique_id=95653087]
-zoom = Vector2(2, 2)
-
-[node name="Inventory" type="Sprite2D" parent="PlayerArea"]
-position = Vector2(0, 0)
+[node name="Inventory" type="Sprite2D" parent="PlayerArea" unique_id=923708557]
+texture_filter = 1
 
 [node name="PlayerCol" type="CollisionShape2D" parent="PlayerArea" unique_id=948100706]
 position = Vector2(-1, 2)

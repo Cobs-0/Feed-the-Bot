@@ -1,17 +1,56 @@
 [gd_scene format=3 uid="uid://dygb0f2ob28k0"]
 
 [ext_resource type="Script" uid="uid://da6ur8eb61w1a" path="res://World/world.gd" id="1_8a836"]
+[ext_resource type="Texture2D" uid="uid://d4h0ymjk43wal" path="res://assets/Water Globe/globe1.png" id="2_dqu5g"]
 [ext_resource type="Texture2D" uid="uid://srgsy5xk5rk" path="res://assets/New/globe.png" id="2_h2aik"]
 [ext_resource type="PackedScene" uid="uid://3tqighbanrjr" path="res://World/forrest.tscn" id="3_j8job"]
+[ext_resource type="Texture2D" uid="uid://0i2i3nrj236i" path="res://assets/Water Globe/globe2.png" id="3_o6lw0"]
 [ext_resource type="PackedScene" uid="uid://crug10fx8q1ny" path="res://World/mountains.tscn" id="4_3f78f"]
+[ext_resource type="Texture2D" uid="uid://dfosvijtje83x" path="res://assets/Water Globe/globe3.png" id="4_x0pyu"]
+[ext_resource type="Texture2D" uid="uid://dgud0w86t808o" path="res://assets/Water Globe/globe4.png" id="5_dg1ng"]
 [ext_resource type="PackedScene" uid="uid://e48dqeu0e685" path="res://World/funnel.tscn" id="5_yf0ba"]
 [ext_resource type="PackedScene" uid="uid://dibsd4w3aqfgi" path="res://World/fence.tscn" id="6_eidgh"]
+[ext_resource type="Texture2D" uid="uid://c8s7fsiupqnfo" path="res://assets/Water Globe/globe5.png" id="6_yfuda"]
+[ext_resource type="Texture2D" uid="uid://oe3a2sxlouu7" path="res://assets/Water Globe/globe6.png" id="7_i8dl0"]
 [ext_resource type="PackedScene" uid="uid://c856jox12fncy" path="res://Npcs/artist.tscn" id="7_oe8m4"]
+[ext_resource type="Texture2D" uid="uid://ds3vl5kgjn1fn" path="res://assets/Water Globe/globe7.png" id="8_jf64p"]
 [ext_resource type="Script" uid="uid://b5efqndc77wot" path="res://World/water.gd" id="8_water"]
+[ext_resource type="PackedScene" uid="uid://dpjvxwoy7ld4m" path="res://World/House.tscn" id="9_0wqet"]
 [ext_resource type="Texture2D" uid="uid://cojvsvvmxtsat" path="res://assets/bridge.png" id="9_lo5ox"]
 [ext_resource type="Texture2D" uid="uid://mnvqeuvjo2fi" path="res://assets/New/AI1.png" id="10_0wqet"]
+[ext_resource type="PackedScene" uid="uid://b5qpqwoayn5ha" path="res://World/rocket.tscn" id="10_awrha"]
 [ext_resource type="Texture2D" uid="uid://cvbkpnd2baeiq" path="res://assets/New/AI2.png" id="11_awrha"]
 [ext_resource type="Texture2D" uid="uid://d1qg8wwwm54pd" path="res://assets/New/AI3.png" id="12_f23eu"]
+[ext_resource type="PackedScene" uid="uid://dag4ifiy8n8u0" path="res://World/guard.tscn" id="15_f23eu"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rw02v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_dqu5g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_o6lw0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_x0pyu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_dg1ng")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_yfuda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_i8dl0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_jf64p")
+}],
+"loop": false,
+"name": &"Water",
+"speed": 6.0
+}]
 
 [sub_resource type="Curve2D" id="Curve2D_j8job"]
 _data = {
@@ -50,8 +89,11 @@ animations = [{
 [node name="World" type="Node2D" unique_id=1413212604]
 script = ExtResource("1_8a836")
 
-[node name="Globe" type="Sprite2D" parent="." unique_id=1867934222]
-texture = ExtResource("2_h2aik")
+[node name="Globe" type="AnimatedSprite2D" parent="." unique_id=508770498]
+z_index = 2
+sprite_frames = SubResource("SpriteFrames_rw02v")
+animation = &"Water"
+frame_progress = 0.8860859
 
 [node name="Ground" type="Path2D" parent="Globe" unique_id=667570290]
 curve = SubResource("Curve2D_j8job")
@@ -88,9 +130,26 @@ rotation = 0.48869225
 scale = Vector2(0.9999999, 0.9999999)
 shape = SubResource("RectangleShape2D_oe8m4")
 
+[node name="House" parent="Globe/Ground" unique_id=1355232406 instance=ExtResource("9_0wqet")]
+position = Vector2(-380, 130)
+rotation = -1.9512781
+
+[node name="CollisionShape2D" parent="Globe/Ground/House/Area2D" parent_id_path=PackedInt32Array(1355232406, 324479435) index="1" unique_id=1745956052]
+position = Vector2(-3.1568985, -3.0517578e-05)
+scale = Vector2(1.0000002, 1.0000002)
+
+[node name="Rocket" parent="Globe/Ground" unique_id=660493943 instance=ExtResource("10_awrha")]
+position = Vector2(0, 410)
+rotation = 3.1415927
+
+[node name="Guard" parent="Globe/Ground" unique_id=1234227054 instance=ExtResource("15_f23eu")]
+position = Vector2(365, 120)
+rotation = 1.8308504
+
 [node name="AI" type="Node2D" parent="Globe" unique_id=1674827496]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Globe/AI" unique_id=2055612544]
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_eidgh")
 animation = &"Talk"
 autoplay = "Idle"
@@ -111,7 +170,15 @@ zoom = Vector2(2, 2)
 [node name="Funnel" parent="Globe" unique_id=2014763869 instance=ExtResource("5_yf0ba")]
 position = Vector2(0, -400)
 
+[node name="GlobeStatic" type="Sprite2D" parent="." unique_id=1867934222]
+visible = false
+texture_filter = 1
+texture = ExtResource("2_h2aik")
+
 [editable path="Globe/Ground/Forrest"]
 [editable path="Globe/Ground/Mountains"]
 [editable path="Globe/Ground/Artist"]
+[editable path="Globe/Ground/House"]
+[editable path="Globe/Ground/Rocket"]
+[editable path="Globe/Ground/Guard"]
 [editable path="Globe/Funnel"]

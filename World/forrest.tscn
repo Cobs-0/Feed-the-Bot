@@ -12,6 +12,7 @@ script = ExtResource("1_yinsp")
 [node name="Area2D" type="Area2D" parent="." unique_id=1901045074]
 
 [node name="ForrestSprite" type="Sprite2D" parent="Area2D" unique_id=1052110594]
+texture_filter = 1
 texture = ExtResource("2_yinsp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=992200050]

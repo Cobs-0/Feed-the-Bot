@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://b5qpqwoayn5ha"]
+
+[ext_resource type="Script" uid="uid://0a377a4h4wov" path="res://World/rocket.gd" id="1_ir5xm"]
+[ext_resource type="Texture2D" uid="uid://biqvkxx461d6w" path="res://assets/RocketShip.png" id="1_l6le0"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l6le0"]
+radius = 36.0
+height = 144.0
+
+[node name="Rocket" type="Node2D" unique_id=660493943]
+script = ExtResource("1_ir5xm")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1901045074]
+
+[node name="RocketSprite" type="Sprite2D" parent="Area2D" unique_id=1052110594]
+texture_filter = 1
+texture = ExtResource("1_l6le0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=408672288]
+position = Vector2(1, 16)
+shape = SubResource("CapsuleShape2D_l6le0")

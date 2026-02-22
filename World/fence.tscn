@@ -17,6 +17,7 @@ shape = SubResource("RectangleShape2D_j8job")
 [node name="Area2D" type="Area2D" parent="." unique_id=1305209173]
 
 [node name="FenceSprite" type="Sprite2D" parent="Area2D" unique_id=681421210]
+texture_filter = 1
 scale = Vector2(0.075, 0.075)
 texture = ExtResource("2_cikys")
 

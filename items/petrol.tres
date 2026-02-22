@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://dkdcbx451o558"]
+
+[ext_resource type="Script" uid="uid://cp42genruyodu" path="res://scripts/Item.gd" id="1_tm4ts"]
+[ext_resource type="Texture2D" uid="uid://1do4my6bjxqf" path="res://assets/Petrol.png" id="2_tm4ts"]
+
+[resource]
+script = ExtResource("1_tm4ts")
+name = "Petrol"
+texture = ExtResource("2_tm4ts")
+ai_dialogue = "We must travel to more planets!d"

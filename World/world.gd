@@ -6,6 +6,7 @@ extends Node2D
 @onready var feeding_cam: Camera2D = $Globe/AI/FeedingCam
 @onready var ai_sprite: AnimatedSprite2D = $Globe/AI/AnimatedSprite2D
 @onready var ai_dialogue: Label = $Globe/AI/AI_Dialogue
+@onready var Globe: AnimatedSprite2D = $Globe # Added reference to the Globe node
 
 var is_feeding: bool = false
 var blocked_direction: float = 0.0 # 1: right, -1: left
@@ -16,13 +17,31 @@ func set_blocked_direction(dir: float) -> void:
 	blocked_direction = dir
 
 func _ready() -> void:
-	rotation = Global.world_state["world_rotation"]
+	Globe.rotation = Global.world_state["world_rotation"] # Applied rotation to Globe
 	if feeding_cam:
 		feeding_cam.enabled = false
 		cam_original_pos = feeding_cam.position
 	if ai_dialogue:
 		ai_dialogue.text = ""
-
+	
+	if Global.world_state.has("exited_house") and Global.world_state["exited_house"] == true:
+		if ai_dialogue and ai_sprite:
+			ai_dialogue.text = "I'm Thirsty"
+			ai_dialogue.visible = true
+			ai_sprite.play("Talk")
+			
+			get_tree().create_timer(3.0).timeout.connect(func():
+				if Global.world_state.get("water_sucked", false): # Keep thirsty if water sucked
+					ai_dialogue.text = "MMMM, I need more than just that"
+					ai_dialogue.visible = true
+				else:
+					ai_dialogue.visible = false
+				ai_sprite.play("Idle")
+			)
+			
+		Global.world_state["exited_house"] = false
+		Global.world_state["last_exit_id"] = ""
+		
 func _process(delta: float) -> void:
 	if following_fireball:
 		feeding_cam.global_position = following_fireball.global_position
@@ -37,8 +56,8 @@ func _process(delta: float) -> void:
 		direction = 0
 	
 	if direction != 0:
-		rotation -= direction * rotation_speed * delta
-		Global.world_state["world_rotation"] = rotation
+		Globe.rotation -= direction * rotation_speed * delta # Applied rotation to Globe
+		Global.world_state["world_rotation"] = Globe.rotation # Store Globe's rotation
 
 func start_feeding_sequence(item) -> void:
 	is_feeding = true
@@ -63,6 +82,10 @@ func start_feeding_sequence(item) -> void:
 			await get_tree().create_timer(2.0).timeout
 			ai_dialogue.text = "Witness my art"
 			await get_tree().create_timer(2.0).timeout
+		elif item_name == "Water": # Specific dialogue for water
+			ai_dialogue.text = "MMMM, I need more than just that"
+			ai_dialogue.visible = true
+			await get_tree().create_timer(2.0).timeout # Keep dialogue for a short time
 		else:
 			ai_dialogue.text = custom_dialogue
 			ai_dialogue.visible = true

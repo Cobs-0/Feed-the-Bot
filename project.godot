@@ -44,6 +44,12 @@ interact={
 ]
 }
 
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+
 [rendering]
 
+textures/default_filters/use_nearest_mipmap_filter=true
 environment/defaults/default_clear_color=Color(0.42060602, 0.7282332, 0.6888267, 1)

@@ -1,25 +1,80 @@
-[gd_scene load_steps=4 format=3 uid="uid://crug10fx8q1ny"]
+[gd_scene format=3 uid="uid://crug10fx8q1ny"]
 
 [ext_resource type="Script" uid="uid://dtdkw4tg5n5i1" path="res://World/mountains.gd" id="1_mount"]
 [ext_resource type="Texture2D" uid="uid://byrmwipgkfgts" path="res://assets/mountains.png" id="2_2g0tp"]
+[ext_resource type="Texture2D" uid="uid://db7ka5tgw3cp2" path="res://assets/Rubble/Rubble1.png" id="3_pswju"]
+[ext_resource type="Texture2D" uid="uid://bbaceg68wwh1b" path="res://assets/Rubble/Rubble2.png" id="4_660w1"]
+[ext_resource type="Texture2D" uid="uid://d0ftwvkg8sjes" path="res://assets/Rubble/Rubble3.png" id="5_hsi7i"]
+[ext_resource type="Texture2D" uid="uid://daflxda1krhnt" path="res://assets/Rubble/Rubble4.png" id="6_miq6j"]
+[ext_resource type="Texture2D" uid="uid://c55u5wkkvvod0" path="res://assets/Rubble/Rubble5.png" id="7_x2vmi"]
+[ext_resource type="Texture2D" uid="uid://clc0r8btnlb3b" path="res://assets/Rubble/Rubble6.png" id="8_iugea"]
+[ext_resource type="Texture2D" uid="uid://cs0xek34fhgr6" path="res://assets/Rubble/Rubble7.png" id="9_a4o35"]
+[ext_resource type="Texture2D" uid="uid://nl1w0ofwke78" path="res://assets/Rubble/Rubble8.png" id="10_85juj"]
+[ext_resource type="Texture2D" uid="uid://qpxydnfkn7ka" path="res://assets/Rubble/Rubble9.png" id="11_k3dd8"]
+[ext_resource type="Texture2D" uid="uid://sjqvggeoqpyt" path="res://assets/Rubble/Rubble10.png" id="12_ay0b1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j8job"]
 size = Vector2(150, 300)
 
-[node name="Mountains" type="Node2D"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_mov2q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_pswju")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_660w1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_hsi7i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_miq6j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_x2vmi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_iugea")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_a4o35")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_85juj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_k3dd8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_ay0b1")
+}],
+"loop": false,
+"name": &"Collapse",
+"speed": 6.0
+}]
+
+[node name="Mountains" type="Node2D" unique_id=1995254992]
 script = ExtResource("1_mount")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1493722589]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=635527455]
 shape = SubResource("RectangleShape2D_j8job")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1600205016]
 
-[node name="MountainsSprite" type="Sprite2D" parent="Area2D"]
+[node name="MountainsSprite" type="Sprite2D" parent="Area2D" unique_id=1456855093]
+texture_filter = 1
 texture = ExtResource("2_2g0tp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D" unique_id=1334843775]
+sprite_frames = SubResource("SpriteFrames_mov2q")
+animation = &"Collapse"
+frame = 9
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1594993283]
 shape = SubResource("RectangleShape2D_j8job")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

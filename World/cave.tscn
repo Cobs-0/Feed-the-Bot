@@ -20,7 +20,7 @@ fill_from = Vector2(0.5, 0.5)
 size = Vector2(50, 50)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
-size = Vector2(100, 100)
+size = Vector2(102, 188)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3edhx"]
 size = Vector2(20, 238)
@@ -36,6 +36,7 @@ offset_bottom = 566.0
 color = Color(0.09411765, 0.14901961, 0.21568628, 1)
 
 [node name="Background" type="Sprite2D" parent="." unique_id=1335987217]
+texture_filter = 1
 position = Vector2(19.500023, -68.00001)
 scale = Vector2(1.5819443, 0.4361111)
 texture = ExtResource("2_ov2v5")
@@ -60,6 +61,7 @@ texture_scale = 10.0
 position = Vector2(200, 7.75)
 
 [node name="Sprite2D" type="Sprite2D" parent="Lantern" unique_id=1124242371]
+texture_filter = 1
 position = Vector2(-3.915, 0)
 scale = Vector2(0.115, 0.115)
 texture = ExtResource("4_rgvjd")
@@ -93,6 +95,12 @@ script = ExtResource("6_rgvjd")
 
 [node name="CollisionShape2D" parent="Miner/Area2D" parent_id_path=PackedInt32Array(2091854405, 1605371899) index="1" unique_id=520998888]
 position = Vector2(4.489998, 1)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2088445939]
+position = Vector2(-2.9749985, 6.17)
+scale = Vector2(0.045, 0.045)
+offset = Vector2(22.76, -31.47)
+zoom = Vector2(1.02, 1.02)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=228405981]
 

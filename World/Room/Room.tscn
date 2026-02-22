@@ -1,0 +1,115 @@
+[gd_scene format=3 uid="uid://cqb12fu71jnos"]
+
+[ext_resource type="Script" uid="uid://sgfuvknch40b" path="res://World/Room/room.gd" id="1_mvo16"]
+[ext_resource type="Texture2D" uid="uid://cujid2dgiiukp" path="res://World/Room/room.png" id="1_oa4ia"]
+[ext_resource type="PackedScene" uid="uid://ifshm6tavlsx" path="res://player/movable_player.tscn" id="2_movable_player"]
+[ext_resource type="FontFile" uid="uid://bjhs7xdy20oyf" path="res://Fonts/Ithaca-LVB75.ttf" id="3_cfiy6"]
+[ext_resource type="Texture2D" uid="uid://c2jbh7x4r7tow" path="res://assets/Inventory/Hoover.png" id="4_oa4ia"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_oa4ia"]
+font = ExtResource("3_cfiy6")
+font_size = 24
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
+size = Vector2(57, 188)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3edhx"]
+size = Vector2(20, 238)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mvo16"]
+size = Vector2(50, 50)
+
+[node name="Room" type="Node2D" unique_id=124862840]
+script = ExtResource("1_mvo16")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=1335987217]
+texture_filter = 1
+position = Vector2(-2.9999743, 6.4999905)
+scale = Vector2(1.8062501, 1.7833332)
+texture = ExtResource("1_oa4ia")
+
+[node name="MovablePlayer" parent="." unique_id=1193224060 instance=ExtResource("2_movable_player")]
+position = Vector2(0, 128)
+
+[node name="Exit" type="Area2D" parent="." unique_id=867458184]
+position = Vector2(-200, 0)
+
+[node name="Label" type="Label" parent="Exit" unique_id=705478803]
+offset_left = -83.0
+offset_top = -40.0
+offset_right = -43.0
+offset_bottom = -17.0
+text = "EXIT"
+label_settings = SubResource("LabelSettings_oa4ia")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit" unique_id=1744578761]
+position = Vector2(-64.5, 76)
+shape = SubResource("RectangleShape2D_exit")
+
+[node name="Exit2" type="Area2D" parent="." unique_id=1134524977]
+position = Vector2(320, 0)
+
+[node name="Label" type="Label" parent="Exit2" unique_id=1626798059]
+offset_left = -74.0
+offset_top = -40.0
+offset_right = -34.0
+offset_bottom = -17.0
+text = "EXIT"
+label_settings = SubResource("LabelSettings_oa4ia")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit2" unique_id=2006222513]
+position = Vector2(-64.5, 76)
+shape = SubResource("RectangleShape2D_exit")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=228405981]
+
+[node name="InteractLabel" type="Label" parent="CanvasLayer" unique_id=2143642228]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 100.0
+offset_right = 20.0
+offset_bottom = 123.0
+grow_horizontal = 2
+
+[node name="Rightwall" type="Area2D" parent="." unique_id=630176075]
+position = Vector2(285, 57)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rightwall" unique_id=981472398]
+shape = SubResource("RectangleShape2D_3edhx")
+
+[node name="Leftwall" type="Area2D" parent="." unique_id=961081450]
+position = Vector2(-293, 46)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Leftwall" unique_id=832507438]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_3edhx")
+
+[node name="Lantern" type="Area2D" parent="." unique_id=910121164]
+position = Vector2(200, 7.75)
+
+[node name="Sprite2D" type="Sprite2D" parent="Lantern" unique_id=865155931]
+texture_filter = 1
+position = Vector2(-306, 134.25)
+texture = ExtResource("4_oa4ia")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lantern" unique_id=305563877]
+position = Vector2(-303, 123.25)
+shape = SubResource("RectangleShape2D_mvo16")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=473781472]
+offset = Vector2(-4.935, 6.915)
+zoom = Vector2(2.025, 2.025)
+
+[connection signal="area_entered" from="Exit" to="." method="_on_exit_area_entered"]
+[connection signal="area_exited" from="Exit" to="." method="_on_exit_area_exited"]
+[connection signal="area_entered" from="Rightwall" to="." method="_on_rightwall_area_entered"]
+[connection signal="area_exited" from="Rightwall" to="." method="_on_rightwall_area_exited"]
+[connection signal="area_entered" from="Leftwall" to="." method="_on_leftwall_area_entered"]
+[connection signal="area_exited" from="Leftwall" to="." method="_on_leftwall_area_exited"]
+
+[editable path="MovablePlayer"]

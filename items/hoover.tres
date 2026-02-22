@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://biqoa7c8xg218"]
+
+[ext_resource type="Script" uid="uid://cp42genruyodu" path="res://scripts/Item.gd" id="1_2l0hp"]
+[ext_resource type="Texture2D" uid="uid://c2jbh7x4r7tow" path="res://assets/Inventory/Hoover.png" id="2_2l0hp"]
+
+[resource]
+script = ExtResource("1_2l0hp")
+name = "Hoover"
+texture = ExtResource("2_2l0hp")
+ai_dialogue = "Ahhhh... I needed that"

@@ -27,6 +27,7 @@ script = ExtResource("1_v6vof")
 [node name="Area2D" type="Area2D" parent="." unique_id=1605371899]
 
 [node name="MinerSprite" type="AnimatedSprite2D" parent="Area2D" unique_id=1739240218]
+texture_filter = 1
 position = Vector2(4, 0)
 scale = Vector2(1.25, 1)
 sprite_frames = SubResource("SpriteFrames_p6iep")

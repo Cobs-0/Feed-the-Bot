@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dpjvxwoy7ld4m"]
+
+[ext_resource type="Script" uid="uid://dxvmxhd5nbd6x" path="res://World/house.gd" id="1_vo0nf"]
+[ext_resource type="Texture2D" uid="uid://ct77dmeut8lad" path="res://assets/House.png" id="2_2ua2j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j8job"]
+size = Vector2(135.55746, 300)
+
+[node name="House" type="Node2D" unique_id=1355232406]
+script = ExtResource("1_vo0nf")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=636150329]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1547481834]
+shape = SubResource("RectangleShape2D_j8job")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=324479435]
+
+[node name="HouseSprite" type="Sprite2D" parent="Area2D" unique_id=1447743302]
+texture_filter = 1
+texture = ExtResource("2_2ua2j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1745956052]
+shape = SubResource("RectangleShape2D_j8job")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
