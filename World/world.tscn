@@ -1,0 +1,117 @@
+[gd_scene format=3 uid="uid://dygb0f2ob28k0"]
+
+[ext_resource type="Script" uid="uid://da6ur8eb61w1a" path="res://World/world.gd" id="1_8a836"]
+[ext_resource type="Texture2D" uid="uid://srgsy5xk5rk" path="res://assets/New/globe.png" id="2_h2aik"]
+[ext_resource type="PackedScene" uid="uid://3tqighbanrjr" path="res://World/forrest.tscn" id="3_j8job"]
+[ext_resource type="PackedScene" uid="uid://crug10fx8q1ny" path="res://World/mountains.tscn" id="4_3f78f"]
+[ext_resource type="PackedScene" uid="uid://e48dqeu0e685" path="res://World/funnel.tscn" id="5_yf0ba"]
+[ext_resource type="PackedScene" uid="uid://dibsd4w3aqfgi" path="res://World/fence.tscn" id="6_eidgh"]
+[ext_resource type="PackedScene" uid="uid://c856jox12fncy" path="res://Npcs/artist.tscn" id="7_oe8m4"]
+[ext_resource type="Script" uid="uid://b5efqndc77wot" path="res://World/water.gd" id="8_water"]
+[ext_resource type="Texture2D" uid="uid://cojvsvvmxtsat" path="res://assets/bridge.png" id="9_lo5ox"]
+[ext_resource type="Texture2D" uid="uid://mnvqeuvjo2fi" path="res://assets/New/AI1.png" id="10_0wqet"]
+[ext_resource type="Texture2D" uid="uid://cvbkpnd2baeiq" path="res://assets/New/AI2.png" id="11_awrha"]
+[ext_resource type="Texture2D" uid="uid://d1qg8wwwm54pd" path="res://assets/New/AI3.png" id="12_f23eu"]
+
+[sub_resource type="Curve2D" id="Curve2D_j8job"]
+_data = {
+"points": PackedVector2Array(0, 0, 360, 0, 0, -360, 0, 0, 0, 360, 360, 0, 0, 0, -360, 0, 0, 360, 0, 0, 0, -360, -360, 0, 0, 0, 0, 0, 0, -360)
+}
+point_count = 5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oe8m4"]
+size = Vector2(101, 144.00244)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eidgh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_0wqet")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_0wqet")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_awrha")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_f23eu")
+}],
+"loop": true,
+"name": &"Talk",
+"speed": 8.0
+}]
+
+[node name="World" type="Node2D" unique_id=1413212604]
+script = ExtResource("1_8a836")
+
+[node name="Globe" type="Sprite2D" parent="." unique_id=1867934222]
+texture = ExtResource("2_h2aik")
+
+[node name="Ground" type="Path2D" parent="Globe" unique_id=667570290]
+curve = SubResource("Curve2D_j8job")
+
+[node name="Forrest" parent="Globe/Ground" unique_id=455049850 instance=ExtResource("3_j8job")]
+position = Vector2(0, -400)
+
+[node name="Mountains" parent="Globe/Ground" unique_id=1373772772 instance=ExtResource("4_3f78f")]
+position = Vector2(410, 0)
+rotation = 1.5707964
+
+[node name="Fence" parent="Globe/Ground" unique_id=1911999286 instance=ExtResource("6_eidgh")]
+position = Vector2(-219, -292.02)
+
+[node name="Artist" parent="Globe/Ground" unique_id=1044295824 instance=ExtResource("7_oe8m4")]
+position = Vector2(0, -380)
+
+[node name="Water" type="Node2D" parent="Globe/Ground" unique_id=755161184]
+script = ExtResource("8_water")
+
+[node name="Area2D" type="Area2D" parent="Globe/Ground/Water" unique_id=1017146934]
+position = Vector2(-330, -135)
+
+[node name="BridgeSprite" type="Sprite2D" parent="Globe/Ground/Water/Area2D" unique_id=651514900]
+visible = false
+position = Vector2(0.12896729, -6.637512)
+rotation = -0.61086524
+scale = Vector2(1.4252818, 1.201293)
+texture = ExtResource("9_lo5ox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Globe/Ground/Water/Area2D" unique_id=1532884868]
+position = Vector2(3.608612, 1.8553314)
+rotation = 0.48869225
+scale = Vector2(0.9999999, 0.9999999)
+shape = SubResource("RectangleShape2D_oe8m4")
+
+[node name="AI" type="Node2D" parent="Globe" unique_id=1674827496]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Globe/AI" unique_id=2055612544]
+sprite_frames = SubResource("SpriteFrames_eidgh")
+animation = &"Talk"
+autoplay = "Idle"
+frame_progress = 0.11773943
+
+[node name="AI_Dialogue" type="Label" parent="Globe/AI" unique_id=207112091]
+offset_left = 79.0
+offset_top = -31.0
+offset_right = 220.0
+offset_bottom = 18.0
+text = "Sample Text...
+This is a Talking AI"
+
+[node name="FeedingCam" type="Camera2D" parent="Globe/AI" unique_id=1616085159]
+ignore_rotation = false
+zoom = Vector2(2, 2)
+
+[node name="Funnel" parent="Globe" unique_id=2014763869 instance=ExtResource("5_yf0ba")]
+position = Vector2(0, -400)
+
+[editable path="Globe/Ground/Forrest"]
+[editable path="Globe/Ground/Mountains"]
+[editable path="Globe/Ground/Artist"]
+[editable path="Globe/Funnel"]

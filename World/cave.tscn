@@ -1,0 +1,135 @@
+[gd_scene format=3 uid="uid://c6y7v6x4k5m8n"]
+
+[ext_resource type="Script" uid="uid://8ndiptg821c8" path="res://World/cave.gd" id="1_cave"]
+[ext_resource type="Texture2D" uid="uid://dl7t4obge0j5j" path="res://assets/cave_BG.png" id="2_ov2v5"]
+[ext_resource type="PackedScene" uid="uid://hxlo3mgcx8ud" path="res://player/player.tscn" id="2_player"]
+[ext_resource type="Texture2D" uid="uid://dnj3qpjj7sumf" path="res://assets/New/lantern.png" id="4_rgvjd"]
+[ext_resource type="PackedScene" uid="uid://dd2i64ja0rav" path="res://Npcs/miner.tscn" id="5_3edhx"]
+[ext_resource type="Script" uid="uid://bs87hffpovu00" path="res://Npcs/miner.gd" id="6_rgvjd"]
+
+[sub_resource type="Gradient" id="Gradient_light"]
+offsets = PackedFloat32Array(0, 0.658385)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_light"]
+gradient = SubResource("Gradient_light")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lantern"]
+size = Vector2(50, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
+size = Vector2(100, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3edhx"]
+size = Vector2(20, 238)
+
+[node name="Cave" type="Node2D" unique_id=124862840]
+script = ExtResource("1_cave")
+
+[node name="BG" type="ColorRect" parent="." unique_id=7085410]
+offset_left = -1256.0
+offset_top = -853.0
+offset_right = 1387.0
+offset_bottom = 566.0
+color = Color(0.09411765, 0.14901961, 0.21568628, 1)
+
+[node name="Background" type="Sprite2D" parent="." unique_id=1335987217]
+position = Vector2(19.500023, -68.00001)
+scale = Vector2(1.5819443, 0.4361111)
+texture = ExtResource("2_ov2v5")
+
+[node name="Floor" type="ColorRect" parent="." unique_id=120854795]
+offset_left = -551.0
+offset_top = 32.0
+offset_right = 591.0
+offset_bottom = 163.0
+color = Color(0.09411765, 0.14901961, 0.21568628, 1)
+
+[node name="Player" parent="." unique_id=1193224060 instance=ExtResource("2_player")]
+
+[node name="PlayerLight" type="PointLight2D" parent="Player" unique_id=2222222]
+visible = false
+position = Vector2(0, 5)
+energy = 1.2
+texture = SubResource("GradientTexture2D_light")
+texture_scale = 10.0
+
+[node name="Lantern" type="Area2D" parent="." unique_id=637633107]
+position = Vector2(200, 7.75)
+
+[node name="Sprite2D" type="Sprite2D" parent="Lantern" unique_id=1124242371]
+position = Vector2(-3.915, 0)
+scale = Vector2(0.115, 0.115)
+texture = ExtResource("4_rgvjd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lantern" unique_id=211680909]
+shape = SubResource("RectangleShape2D_lantern")
+
+[node name="Exit" type="Area2D" parent="." unique_id=867458184]
+position = Vector2(-200, 0)
+
+[node name="ColorRect" type="ColorRect" parent="Exit" unique_id=474554597]
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+color = Color(0.8, 0.6, 0.2, 0.5)
+
+[node name="Label" type="Label" parent="Exit" unique_id=705478803]
+offset_left = -20.0
+offset_top = -60.0
+offset_right = 20.0
+offset_bottom = -37.0
+text = "EXIT"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit" unique_id=1744578761]
+shape = SubResource("RectangleShape2D_exit")
+
+[node name="Miner" parent="." unique_id=2091854405 instance=ExtResource("5_3edhx")]
+position = Vector2(89.51, 0)
+script = ExtResource("6_rgvjd")
+
+[node name="CollisionShape2D" parent="Miner/Area2D" parent_id_path=PackedInt32Array(2091854405, 1605371899) index="1" unique_id=520998888]
+position = Vector2(4.489998, 1)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=228405981]
+
+[node name="InteractLabel" type="Label" parent="CanvasLayer" unique_id=2143642228]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 100.0
+offset_right = 20.0
+offset_bottom = 123.0
+grow_horizontal = 2
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1111111]
+
+[node name="Rightwall" type="Area2D" parent="." unique_id=630176075]
+position = Vector2(263, -56)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rightwall" unique_id=981472398]
+position = Vector2(337, -4)
+shape = SubResource("RectangleShape2D_3edhx")
+
+[node name="Leftwall" type="Area2D" parent="." unique_id=961081450]
+position = Vector2(526, -112)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Leftwall" unique_id=832507438]
+position = Vector2(-1087, 45)
+shape = SubResource("RectangleShape2D_3edhx")
+
+[connection signal="area_entered" from="Lantern" to="." method="_on_lantern_area_entered"]
+[connection signal="area_exited" from="Lantern" to="." method="_on_lantern_area_exited"]
+[connection signal="area_entered" from="Exit" to="." method="_on_exit_area_entered"]
+[connection signal="area_exited" from="Exit" to="." method="_on_exit_area_exited"]
+[connection signal="area_entered" from="Rightwall" to="." method="_on_rightwall_area_entered"]
+[connection signal="area_exited" from="Rightwall" to="." method="_on_rightwall_area_exited"]
+[connection signal="area_entered" from="Leftwall" to="." method="_on_leftwall_area_entered"]
+[connection signal="area_exited" from="Leftwall" to="." method="_on_leftwall_area_exited"]
+
+[editable path="Player"]
+[editable path="Miner"]

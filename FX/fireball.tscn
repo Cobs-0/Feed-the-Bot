@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cew368783whqh"]
+
+[ext_resource type="Script" uid="uid://y1x7r5qegek8" path="res://FX/fireball.gd" id="1_23bqr"]
+[ext_resource type="Texture2D" uid="uid://c55qc660dmh5v" path="res://assets/New/fireball.png" id="2_snhxo"]
+
+[node name="Fireball" type="Node2D" unique_id=812835527]
+script = ExtResource("1_23bqr")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=855181189]
+scale = Vector2(0.035, 0.035)
+texture = ExtResource("2_snhxo")

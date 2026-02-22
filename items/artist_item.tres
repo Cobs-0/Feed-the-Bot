@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://c6jc8a606ffrb"]
+
+[ext_resource type="Script" uid="uid://cp42genruyodu" path="res://scripts/Item.gd" id="1_item"]
+[ext_resource type="Texture2D" uid="uid://ct2hl1is10uvd" path="res://assets/Artist/Artist_closed.png" id="2_tex"]
+
+[resource]
+script = ExtResource("1_item")
+name = "Artist"
+texture = ExtResource("2_tex")
+ai_dialogue = "Witness my fantasic art..."

@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://3tqighbanrjr"]
+
+[ext_resource type="Script" uid="uid://doobpebchifr6" path="res://World/forrest.gd" id="1_yinsp"]
+[ext_resource type="Texture2D" uid="uid://cvomhqrrp573v" path="res://assets/New/forrest.png" id="2_yinsp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j8job"]
+size = Vector2(150, 300)
+
+[node name="Forrest" type="Node2D" unique_id=660493943]
+script = ExtResource("1_yinsp")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1901045074]
+
+[node name="ForrestSprite" type="Sprite2D" parent="Area2D" unique_id=1052110594]
+texture = ExtResource("2_yinsp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=992200050]
+shape = SubResource("RectangleShape2D_j8job")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

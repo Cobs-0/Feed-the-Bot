@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://ds6qux6gf7n5l"]
+
+[ext_resource type="PackedScene" uid="uid://dygb0f2ob28k0" path="res://World/world.tscn" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://hxlo3mgcx8ud" path="res://player/player.tscn" id="2_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://cu82lin82xnch" path="res://assets/New/Tube.png" id="2_irwmq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0xm2m"]
+
+[node name="Main" type="Node2D" unique_id=372716763]
+
+[node name="World" parent="." unique_id=190776170 instance=ExtResource("1_0xm2m")]
+position = Vector2(1, 380)
+rotation_speed = 1.0
+
+[node name="Forrest" parent="World/Globe/Ground" parent_id_path=PackedInt32Array(190776170, 667570290) index="0" unique_id=455049850]
+position = Vector2(285, -285)
+rotation = 0.7853982
+
+[node name="Fence" parent="World/Globe/Ground" parent_id_path=PackedInt32Array(190776170, 667570290) index="2" unique_id=1911999286]
+position = Vector2(-219, -274.345)
+skew = -0.12217305
+
+[node name="Artist" parent="World/Globe/Ground" parent_id_path=PackedInt32Array(190776170, 667570290) index="3" unique_id=1044295824]
+position = Vector2(130, -359)
+rotation = 0.4886922
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Globe/AI" parent_id_path=PackedInt32Array(190776170, 1674827496) index="1" unique_id=1988249223]
+position = Vector2(0, 5)
+texture = ExtResource("2_irwmq")
+
+[node name="AI_Dialogue" parent="World/Globe/AI" parent_id_path=PackedInt32Array(190776170, 1674827496) index="2" unique_id=207112091]
+text = "FEED ME!"
+
+[node name="Funnel" parent="World/Globe" parent_id_path=PackedInt32Array(190776170, 1867934222) index="2" unique_id=2014763869]
+position = Vector2(-100, -400)
+rotation = -0.2443461
+
+[node name="Player" parent="." unique_id=686447817 instance=ExtResource("2_0xm2m")]
+
+[node name="Inventory" parent="Player/PlayerArea/PlayerSprite" parent_id_path=PackedInt32Array(686447817, 1813233531) index="1" unique_id=1710882201]
+position = Vector2(0, 8.005)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1725672648]
+
+[node name="InteractLabel" type="Label" parent="CanvasLayer" unique_id=300526199]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -18.0
+offset_top = 128.0
+offset_right = 18.0
+offset_bottom = 151.0
+grow_horizontal = 2
+text = "TEST"
+label_settings = SubResource("LabelSettings_0xm2m")
+
+[connection signal="area_entered" from="World/Globe/Ground/Forrest/Area2D" to="World/Globe/Ground/Forrest" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="World/Globe/Ground/Forrest/Area2D" to="World/Globe/Ground/Forrest" method="_on_area_2d_area_exited"]
+
+[editable path="World"]
+[editable path="World/Globe/Ground/Forrest"]
+[editable path="World/Globe/Ground/Mountains"]
+[editable path="World/Globe/Ground/Artist"]
+[editable path="World/Globe/Funnel"]
+[editable path="Player"]

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://dcfuw25uhnmki"]
+
+[ext_resource type="Script" uid="uid://cp42genruyodu" path="res://scripts/Item.gd" id="1_item"]
+[ext_resource type="Texture2D" uid="uid://bnxqckdsubbeo" path="res://assets/Inventory/wood.png" id="2_wood"]
+
+[resource]
+script = ExtResource("1_item")
+name = "Wood"
+texture = ExtResource("2_wood")
+ai_dialogue = "Need Light to Grow!"
+visual_scale = 0.3

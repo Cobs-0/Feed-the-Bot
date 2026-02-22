@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://cuesj8sg1cfec"]
+
+[ext_resource type="Script" uid="uid://cp42genruyodu" path="res://scripts/Item.gd" id="1_item"]
+[ext_resource type="Texture2D" uid="uid://dnj3qpjj7sumf" path="res://assets/New/lantern.png" id="2_13y7i"]
+
+[resource]
+script = ExtResource("1_item")
+name = "Lantern"
+texture = ExtResource("2_13y7i")
+ai_dialogue = "The light of the
+righteous rejoices"
+visual_scale = 0.05

@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://dibsd4w3aqfgi"]
+
+[ext_resource type="Script" uid="uid://dmipfouwd375b" path="res://World/fence.gd" id="1_1ncse"]
+[ext_resource type="Texture2D" uid="uid://b3d57eyuvdqtj" path="res://assets/New/fence.png" id="2_cikys"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j8job"]
+size = Vector2(98, 54)
+
+[node name="Fence" type="Node2D" unique_id=867476831]
+script = ExtResource("1_1ncse")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=2129684962]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1114439220]
+shape = SubResource("RectangleShape2D_j8job")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1305209173]
+
+[node name="FenceSprite" type="Sprite2D" parent="Area2D" unique_id=681421210]
+scale = Vector2(0.075, 0.075)
+texture = ExtResource("2_cikys")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2115954140]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_j8job")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
