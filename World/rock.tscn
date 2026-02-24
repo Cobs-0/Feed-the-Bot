@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://8go2dkxhocts"]
 
 [ext_resource type="Texture2D" uid="uid://58q6h7p4hcw7" path="res://assets/New/boulder1.png" id="1_f325v"]
+[ext_resource type="Script" uid="uid://ubolvvjrrojj" path="res://World/rock.gd" id="1_npu1i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lantern"]
 size = Vector2(50, 50)
 
 [node name="Rock" type="Node2D" unique_id=1570031631]
+script = ExtResource("1_npu1i")
 
 [node name="RockArea" type="Area2D" parent="." unique_id=1869556680]
 

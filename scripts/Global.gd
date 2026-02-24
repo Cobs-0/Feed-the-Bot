@@ -1,14 +1,14 @@
 extends Node
 
-var _current_item = null:
+var current_item = null:
 	set(value):
-		if value != _current_item:
-			print("Global.current_item changed from ", _current_item, " to ", value)
+		if value != current_item:
+			print("Global.current_item changed from ", current_item, " to ", value)
 			if value:
 				print("New item name: ", value.name)
-			_current_item = value
+			current_item = value
 	get:
-		return _current_item
+		return current_item
 
 var world_state = {
 	"chopped_trees": [],
@@ -20,5 +20,10 @@ var world_state = {
 	"bridge_built": false,
 	"artist_deposited": false,
 	"hoover_filled_with_water": false,
-	"hoover_collected": false
+	"hoover_collected": false,
+	"rocket_fueled": false,
+	"petrol_collected": false,
+	"guard_down": false,
+	"rock_collected": false,
+	"mountain_collapsed": false
 }

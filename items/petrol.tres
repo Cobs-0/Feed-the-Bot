@@ -7,4 +7,4 @@
 script = ExtResource("1_tm4ts")
 name = "Petrol"
 texture = ExtResource("2_tm4ts")
-ai_dialogue = "We must travel to more planets!d"
+ai_dialogue = "We must travel to more planets!"

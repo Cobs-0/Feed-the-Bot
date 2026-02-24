@@ -3,23 +3,31 @@
 [ext_resource type="Script" uid="uid://0cjxac418k5g" path="res://World/guard.gd" id="1_co6rx"]
 [ext_resource type="Texture2D" uid="uid://cj0eifd42yro2" path="res://assets/Guard.png" id="1_j5ahr"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vupwf"]
+size = Vector2(40.384277, 65.76717)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h1wyg"]
 size = Vector2(39, 72)
 
 [node name="Guard" type="Node2D" unique_id=1234227054]
 script = ExtResource("1_co6rx")
 
-[node name="Area2D" type="Area2D" parent="." unique_id=1497827154]
+[node name="GuardCollisionBody" type="StaticBody2D" parent="." unique_id=1674194211]
 
-[node name="Sprite2D" type="Sprite2D" parent="Area2D" unique_id=1396511201]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GuardCollisionBody" unique_id=49766796]
+shape = SubResource("RectangleShape2D_vupwf")
+
+[node name="Area2D" type="Area2D" parent="GuardCollisionBody" unique_id=1497827154]
+
+[node name="Sprite2D" type="Sprite2D" parent="GuardCollisionBody/Area2D" unique_id=1396511201]
 texture = ExtResource("1_j5ahr")
 flip_h = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1010237328]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GuardCollisionBody/Area2D" unique_id=1010237328]
 position = Vector2(-1.5, 1)
 shape = SubResource("RectangleShape2D_h1wyg")
 
-[node name="DialogueLabel" type="Label" parent="." unique_id=1594725132]
+[node name="DialogueLabel" type="Label" parent="GuardCollisionBody" unique_id=1594725132]
 offset_left = -100.0
 offset_top = -100.0
 offset_right = 140.0

@@ -7,6 +7,7 @@ var player_in_range: bool = false
 @onready var _collision_shape: CollisionShape2D = $GuardCollisionBody/CollisionShape2D
 @onready var _guard_sprite: Sprite2D = $GuardCollisionBody/Area2D/Sprite2D
 @onready var interact_label: Label = get_tree().root.find_child("InteractLabel", true, false)
+@onready var world_node: Node2D = get_tree().root.find_child("World", true, false) # Add world_node reference
 
 func _ready() -> void:
 	_dialogue_label.visible = false
@@ -16,8 +17,6 @@ func _ready() -> void:
 			_area_2d.area_entered.connect(_on_area_entered)
 		if not _area_2d.area_exited.is_connected(_on_area_exited):
 			_area_2d.area_exited.connect(_on_area_exited)
-	
-
 	
 	# Guard state if already knocked down
 	if Global.world_state.get("guard_down", false):
@@ -49,11 +48,17 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.name == "PlayerArea":
 		player_in_range = true
 		if not Global.world_state.get("guard_down", false):
-			_dialogue_label.text = "You can't get in there sir... It's dangerous."
+			_dialogue_label.text = "You can't get past sir... It's dangerous."
 			_dialogue_label.visible = true
 			if interact_label:
 				interact_label.text = "Press E to Interact"
 				interact_label.visible = true
+			
+			if world_node and world_node.has_method("set_blocked_direction"):
+				var move_dir = Input.get_axis("move_left", "move_right")
+				if move_dir == 0: move_dir = 1.0 
+				world_node.set_blocked_direction(sign(move_dir))
+
 
 func _on_area_exited(area: Area2D) -> void:
 	if area.name == "PlayerArea":
@@ -61,6 +66,9 @@ func _on_area_exited(area: Area2D) -> void:
 		_dialogue_label.visible = false
 		if interact_label:
 			interact_label.visible = false
+		
+		if world_node and world_node.has_method("set_blocked_direction"):
+			world_node.set_blocked_direction(0.0)
 
 func _hit_with_rock(player_node: Node2D) -> void:
 	Global.world_state["guard_down"] = true

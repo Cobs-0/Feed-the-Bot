@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://cn7r7yw05nwcs"]
 
+[ext_resource type="Script" uid="uid://bpolwfto1rm5t" path="res://World/petrol.gd" id="1_ooj7u"]
 [ext_resource type="Texture2D" uid="uid://1do4my6bjxqf" path="res://assets/Petrol.png" id="1_sgllm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lantern"]
 size = Vector2(50, 50)
 
 [node name="Petrol" type="Node2D" unique_id=1578377779]
+script = ExtResource("1_ooj7u")
 
 [node name="PetrolArea" type="Area2D" parent="." unique_id=1869556680]
 

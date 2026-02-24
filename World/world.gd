@@ -42,6 +42,18 @@ func _ready() -> void:
 		Global.world_state["exited_house"] = false
 		Global.world_state["last_exit_id"] = ""
 		
+	# New logic for mountain collapse after exiting cave with guard down
+	if Global.world_state.get("exited_cave_after_guard_down", false):
+		var mountains_node = find_child("Mountains", true, false)
+		if mountains_node:
+			var animated_sprite = mountains_node.find_child("AnimatedSprite2D", true, false) # Mountains/Area2D/AnimatedSprite2D
+			if animated_sprite:
+				animated_sprite.play("Collapse")
+				# Optionally wait for animation to finish if needed
+				# await animated_sprite.animation_finished
+		Global.world_state["mountain_collapsed"] = true # Persist the collapsed state
+		# Global.world_state["exited_cave_after_guard_down"] = false # Removed: this flag should not reset here
+		
 func _process(delta: float) -> void:
 	if following_fireball:
 		feeding_cam.global_position = following_fireball.global_position

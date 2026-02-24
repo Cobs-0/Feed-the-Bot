@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://dd8f68e9f2g7"]
+
+[ext_resource type="Script" path="res://Cloud/cloud.gd" id="1_cloud_script"]
+
+[node name="Cloud" type="Node2D"]
+script = ExtResource("1_cloud_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]

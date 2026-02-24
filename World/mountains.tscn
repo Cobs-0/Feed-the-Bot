@@ -23,10 +23,10 @@ animations = [{
 "texture": ExtResource("3_pswju")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_660w1")
+"texture": ExtResource("5_hsi7i")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_hsi7i")
+"texture": ExtResource("4_660w1")
 }, {
 "duration": 1.0,
 "texture": ExtResource("6_miq6j")
@@ -65,14 +65,15 @@ shape = SubResource("RectangleShape2D_j8job")
 [node name="Area2D" type="Area2D" parent="." unique_id=1600205016]
 
 [node name="MountainsSprite" type="Sprite2D" parent="Area2D" unique_id=1456855093]
+visible = false
 texture_filter = 1
 texture = ExtResource("2_2g0tp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D" unique_id=1334843775]
 sprite_frames = SubResource("SpriteFrames_mov2q")
 animation = &"Collapse"
-frame = 9
-frame_progress = 1.0
+frame = 2
+frame_progress = 0.6269711
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1594993283]
 shape = SubResource("RectangleShape2D_j8job")

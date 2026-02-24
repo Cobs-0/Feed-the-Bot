@@ -2,10 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bs0lx8vl5bimw" path="res://scripts/main.gd" id="0_main_script"]
 [ext_resource type="PackedScene" uid="uid://dygb0f2ob28k0" path="res://World/world.tscn" id="1_0xm2m"]
-[ext_resource type="PackedScene" uid="uid://cn7r7yw05nwcs" path="res://World/petrol.tscn" id="2_0nr8p"]
 [ext_resource type="PackedScene" uid="uid://hxlo3mgcx8ud" path="res://player/player.tscn" id="2_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://cu82lin82xnch" path="res://assets/New/Tube.png" id="2_irwmq"]
-[ext_resource type="PackedScene" uid="uid://8go2dkxhocts" path="res://World/rock.tscn" id="3_kv812"]
+[ext_resource type="Script" uid="uid://c45akomgnlfsc" path="res://Cloud/CloudManager.gd" id="4_0nr8p"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_0xm2m"]
 
@@ -28,17 +27,11 @@ skew = -0.12217305
 position = Vector2(130, -359)
 rotation = 0.4886922
 
-[node name="Sprite2D" parent="World/Globe/Ground/Guard/Area2D" parent_id_path=PackedInt32Array(190776170, 1234227054, 1497827154) index="0" unique_id=1396511201]
+[node name="CollisionShape2D" parent="World/Globe/Ground/Guard/GuardCollisionBody" parent_id_path=PackedInt32Array(190776170, 1234227054, 1674194211) index="0" unique_id=49766796]
+position = Vector2(-0.28805542, 0.35455322)
+
+[node name="Sprite2D" parent="World/Globe/Ground/Guard/GuardCollisionBody/Area2D" parent_id_path=PackedInt32Array(190776170, 1234227054, 1497827154) index="0" unique_id=1396511201]
 texture_filter = 1
-
-[node name="Petrol" parent="World/Globe/Ground" parent_id_path=PackedInt32Array(190776170, 667570290) index="8" unique_id=1578377779 instance=ExtResource("2_0nr8p")]
-position = Vector2(120, 350)
-rotation = 2.7750735
-
-[node name="Rock" parent="World/Globe/Ground" parent_id_path=PackedInt32Array(190776170, 667570290) index="9" unique_id=1570031631 instance=ExtResource("3_kv812")]
-position = Vector2(-198.225, 308.675)
-rotation = 3.7821286
-scale = Vector2(0.73, 0.73)
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Globe/AI" parent_id_path=PackedInt32Array(190776170, 1674827496) index="1" unique_id=1988249223]
 texture_filter = 1
@@ -51,6 +44,10 @@ text = "FEED ME!"
 [node name="Funnel" parent="World/Globe" parent_id_path=PackedInt32Array(190776170, 508770498) index="2" unique_id=2014763869]
 position = Vector2(-100, -400)
 rotation = -0.2443461
+
+[node name="CloudManager" type="Node2D" parent="World" unique_id=1894252528]
+script = ExtResource("4_0nr8p")
+num_clouds = 15
 
 [node name="Player" parent="." unique_id=686447817 instance=ExtResource("2_0xm2m")]
 

@@ -22,6 +22,10 @@
 [ext_resource type="Texture2D" uid="uid://cvbkpnd2baeiq" path="res://assets/New/AI2.png" id="11_awrha"]
 [ext_resource type="Texture2D" uid="uid://d1qg8wwwm54pd" path="res://assets/New/AI3.png" id="12_f23eu"]
 [ext_resource type="PackedScene" uid="uid://dag4ifiy8n8u0" path="res://World/guard.tscn" id="15_f23eu"]
+[ext_resource type="PackedScene" uid="uid://cn7r7yw05nwcs" path="res://World/petrol.tscn" id="18_x0pyu"]
+[ext_resource type="PackedScene" uid="uid://8go2dkxhocts" path="res://World/rock.tscn" id="19_dg1ng"]
+[ext_resource type="Script" uid="uid://1z5y7x9w2v8u" path="res://Cloud/CloudManager.gd" id="20_cloud_manager_script"]
+[ext_resource type="PackedScene" uid="uid://dd8f68e9f2g7" path="res://Cloud/cloud.tscn" id="21_cloud_scene"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rw02v"]
 animations = [{
@@ -143,8 +147,17 @@ position = Vector2(0, 410)
 rotation = 3.1415927
 
 [node name="Guard" parent="Globe/Ground" unique_id=1234227054 instance=ExtResource("15_f23eu")]
-position = Vector2(365, 120)
+position = Vector2(358.395, 137.86)
 rotation = 1.8308504
+
+[node name="Petrol" parent="Globe/Ground" unique_id=1578377779 instance=ExtResource("18_x0pyu")]
+position = Vector2(120, 350)
+rotation = 2.7750735
+
+[node name="Rock" parent="Globe/Ground" unique_id=1570031631 instance=ExtResource("19_dg1ng")]
+position = Vector2(-198.225, 308.675)
+rotation = 3.7821286
+scale = Vector2(0.73, 0.73)
 
 [node name="AI" type="Node2D" parent="Globe" unique_id=1674827496]
 
@@ -170,8 +183,18 @@ zoom = Vector2(2, 2)
 [node name="Funnel" parent="Globe" unique_id=2014763869 instance=ExtResource("5_yf0ba")]
 position = Vector2(0, -400)
 
+[node name="CloudManager" type="Node2D" parent="." unique_id=123456789]
+script = ExtResource("20_cloud_manager_script")
+cloud_scene = ExtResource("21_cloud_scene")
+num_clouds = 15
+cloud_y_offset = -200.0
+cloud_speed_min = 0.005
+cloud_speed_max = 0.02
+
 [node name="GlobeStatic" type="Sprite2D" parent="." unique_id=1867934222]
 visible = false
+texture_filter = 1
+texture = ExtResource("2_h2aik")
 texture_filter = 1
 texture = ExtResource("2_h2aik")
 
@@ -181,4 +204,6 @@ texture = ExtResource("2_h2aik")
 [editable path="Globe/Ground/House"]
 [editable path="Globe/Ground/Rocket"]
 [editable path="Globe/Ground/Guard"]
+[editable path="Globe/Ground/Petrol"]
+[editable path="Globe/Ground/Rock"]
 [editable path="Globe/Funnel"]

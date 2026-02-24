@@ -10,16 +10,30 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if player_in_range:
 		if event.is_action_pressed("interact"):
-			enter_cave()
+			if Global.world_state.get("mountain_collapsed", false):
+				# Mountain has collapsed, cannot enter
+				if interact_label:
+					interact_label.text = "Cave entrance blocked."
+					interact_label.visible = true
+					get_tree().create_timer(2.0).timeout.connect(func():
+						interact_label.visible = false
+					)
+			else:
+				enter_cave()
 
 func enter_cave() -> void:
+	if Global.world_state.get("guard_down", false):
+		Global.world_state["entered_cave_after_guard_down"] = true
 	get_tree().change_scene_to_file("res://World/cave.tscn")
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if area.name == "PlayerArea":
 		player_in_range = true
 		if interact_label:
-			interact_label.text = "Press E to enter Cave"
+			if Global.world_state.get("mountain_collapsed", false):
+				interact_label.text = "Cave entrance blocked."
+			else:
+				interact_label.text = "Press E to enter Cave"
 			interact_label.visible = true
 		
 		var world = get_tree().root.find_child("World", true, false)
