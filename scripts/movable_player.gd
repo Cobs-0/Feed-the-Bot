@@ -4,12 +4,19 @@ extends CharacterBody2D
 @onready var player_sprite: AnimatedSprite2D = $PlayerArea/PlayerSprite
 
 const SPEED = 300.0
+var _blocked_direction: float = 0.0
+
+func set_blocked_direction(dir: float) -> void:
+	_blocked_direction = dir
 
 func _ready() -> void:
 	update_inventory_visuals()
 
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("move_left", "move_right")
+	
+	if _blocked_direction != 0 and sign(direction) == sign(_blocked_direction):
+		direction = 0
 	
 	if direction != 0:
 		velocity.x = direction * SPEED
@@ -35,7 +42,6 @@ func collect_item(item: Item) -> bool:
 	return false
 
 func drop_item() -> void:
-	print("MovablePlayer drop_item() called!") # DEBUG
 	Global.current_item = null
 	update_inventory_visuals()
 

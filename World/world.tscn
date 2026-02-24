@@ -91,6 +91,8 @@ animations = [{
 
 [sub_resource type="LabelSettings" id="LabelSettings_i8dl0"]
 font = ExtResource("23_yfuda")
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 1)
 
 [node name="World" type="Node2D" unique_id=1413212604]
 script = ExtResource("1_8a836")
@@ -98,6 +100,7 @@ script = ExtResource("1_8a836")
 [node name="Globe" type="AnimatedSprite2D" parent="." unique_id=508770498]
 z_index = 2
 sprite_frames = SubResource("SpriteFrames_rw02v")
+animation = &"Water"
 
 [node name="Ground" type="Path2D" parent="Globe" unique_id=667570290]
 curve = SubResource("Curve2D_j8job")
@@ -169,6 +172,7 @@ autoplay = "Idle"
 frame_progress = 0.11773943
 
 [node name="AI_Dialogue" type="Label" parent="Globe/AI" unique_id=207112091]
+texture_filter = 1
 offset_left = 79.0
 offset_top = -31.0
 offset_right = 220.0

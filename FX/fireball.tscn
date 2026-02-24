@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c55qc660dmh5v" path="res://assets/New/fireball.png" id="2_snhxo"]
 
 [node name="Fireball" type="Node2D" unique_id=812835527]
+z_index = 4
 script = ExtResource("1_23bqr")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=855181189]

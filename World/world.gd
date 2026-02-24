@@ -263,10 +263,6 @@ func _set_globe_water_state():
 		if Global.world_state.get("water_sucked", false): # If water has been sucked (implies NO water visually, so show last frame)
 			Globe.frame = Globe.sprite_frames.get_frame_count("Water") - 1 # Set to last frame (no water)
 			Globe.set_deferred("playing", false) # Hold last frame
-			print("World.gd _set_globe_water_state(): Water sucked. Globe.frame set to:", Globe.frame)
 		else: # If water has NOT been sucked (implies WATER PRESENT visually, so show first frame)
 			Globe.frame = 0 # Set to first frame (water present)
 			Globe.set_deferred("playing", false) # Hold first frame
-			print("World.gd _set_globe_water_state(): Water present. Globe.frame set to:", Globe.frame)
-	else:
-		print("World.gd _set_globe_water_state(): ERROR: Globe is not a valid AnimatedSprite2D during deferred call!")

@@ -32,6 +32,7 @@ position = Vector2(-1.5, 1)
 shape = SubResource("RectangleShape2D_h1wyg")
 
 [node name="DialogueLabel" type="Label" parent="GuardCollisionBody" unique_id=1594725132]
+texture_filter = 1
 offset_left = -100.0
 offset_top = -100.0
 offset_right = 140.0

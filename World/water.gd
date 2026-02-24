@@ -60,32 +60,14 @@ func show_bridge() -> void:
 		bridge_sprite.visible = true
 
 func _input(event: InputEvent) -> void:
-	print("Water _input running!") # DEBUG
-	print("player_in_range: ", player_in_range) # DEBUG
-	print("Event action pressed (interact): ", event.is_action_pressed("interact")) # DEBUG
-	
 	if not player_in_range: return
 	
 	if event.is_action_pressed("interact"):
-		print("--- Interact Pressed ---") # DEBUG
-		
-		# Removed: if Global.world_state["bridge_built"]: return
-		
-		if Global.current_item:
-			print("Current Item Name: ", Global.current_item.name)
-			print("Is current item Hoover? ", Global.current_item.name == "Hoover") # DEBUG
-		else:
-			print("Current Item: None")
-		print("Hoover filled with water state: ", Global.world_state.get("hoover_filled_with_water", false))
 		
 		var has_hoover = Global.current_item and Global.current_item.name == "Hoover"
 		var hoover_is_filled = Global.world_state.get("hoover_filled_with_water", false)
 		
-		print("has_hoover: ", has_hoover) # DEBUG
-		print("hoover_is_filled: ", hoover_is_filled) # DEBUG
-		
 		if has_hoover and not hoover_is_filled:
-			print("Entering Hoover interaction block - Condition passed!") # DEBUG
 			# AI Dialogue: "Give me that!"
 			if ai_dialogue_label and ai_animated_sprite:
 				ai_dialogue_label.text = "Give me that!"
@@ -99,10 +81,8 @@ func _input(event: InputEvent) -> void:
 				if interact_label:
 					interact_label.visible = false # Hide label during animation
 		elif not has_hoover: # No Hoover, or wrong item
-			print("Entering Inspect water block - No Hoover detected.") # DEBUG
 			inspect_water()
 		elif has_hoover and hoover_is_filled: # Hoover is filled
-			print("Entering Hoover full block - Hoover is already full.") # DEBUG
 			if interact_label:
 				interact_label.text = "The Hoover is already full!"
 				interact_label.visible = true
@@ -165,10 +145,8 @@ func inspect_water() -> void:
 		ai_cam.enabled = false
 
 func _on_area_entered(area: Area2D) -> void:
-	print("Water Area Entered! Area: ", area.name) # DEBUG
 	if area.name == "PlayerArea":
 		player_in_range = true
-		print("player_in_range after entered: ", player_in_range) # DEBUG
 		
 		# Handle Interact Label visibility based on Hoover and Bridge state
 		if interact_label:
@@ -193,10 +171,8 @@ func _on_area_entered(area: Area2D) -> void:
 				world.set_blocked_direction(sign(move_dir))
 
 func _on_area_exited(area: Area2D) -> void:
-	print("Water Area Exited! Area: ", area.name) # DEBUG
 	if area.name == "PlayerArea":
 		player_in_range = false
-		print("player_in_range after exited: ", player_in_range) # DEBUG
 		if interact_label:
 			interact_label.visible = false
 		

@@ -8,6 +8,8 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_0xm2m"]
 font = ExtResource("6_kv812")
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 1)
 
 [node name="Main" type="Node2D" unique_id=372716763]
 script = ExtResource("0_main_script")
@@ -15,9 +17,6 @@ script = ExtResource("0_main_script")
 [node name="World" parent="." unique_id=190776170 instance=ExtResource("1_0xm2m")]
 position = Vector2(1, 380)
 rotation_speed = 1.0
-
-[node name="Globe" parent="World" index="0" unique_id=508770498]
-
 
 [node name="Forrest" parent="World/Globe/Ground" parent_id_path=PackedInt32Array(190776170, 667570290) index="0" unique_id=455049850]
 position = Vector2(285, -285)
@@ -45,7 +44,7 @@ texture = ExtResource("2_irwmq")
 [node name="AI_Dialogue" parent="World/Globe/AI" parent_id_path=PackedInt32Array(190776170, 1674827496) index="2" unique_id=207112091]
 text = "FEED ME!"
 
-[node name="Funnel" parent="World/Globe" index="2" unique_id=2014763869]
+[node name="Funnel" parent="World/Globe" parent_id_path=PackedInt32Array(190776170, 508770498) index="2" unique_id=2014763869]
 position = Vector2(-100, -400)
 rotation = -0.2443461
 

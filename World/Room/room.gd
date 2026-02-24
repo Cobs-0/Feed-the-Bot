@@ -11,6 +11,7 @@ extends Node2D
 var near_exit: bool = false
 var near_exit2: bool = false
 var near_lantern: bool = false
+var blocked_direction: float = 0.0
 
 func _ready() -> void:
 	# Connect signals for exits and lantern
@@ -96,6 +97,22 @@ func _on_Lantern_area_exited(area: Area2D) -> void:
 		interact_label.text = ""
 		interact_label.visible = false
 
+func _on_rightwall_area_entered(area: Area2D) -> void:
+	if area.name == "PlayerArea":
+		blocked_direction = 1.0
+		movable_player.set_blocked_direction(blocked_direction)
 
-func _on_exit_area_exited(area: Area2D) -> void:
-	pass # Replace with function body.
+func _on_rightwall_area_exited(area: Area2D) -> void:
+	if area.name == "PlayerArea":
+		blocked_direction = 0.0
+		movable_player.set_blocked_direction(blocked_direction)
+
+func _on_leftwall_area_entered(area: Area2D) -> void:
+	if area.name == "PlayerArea":
+		blocked_direction = -1.0
+		movable_player.set_blocked_direction(blocked_direction)
+
+func _on_leftwall_area_exited(area: Area2D) -> void:
+	if area.name == "PlayerArea":
+		blocked_direction = 0.0
+		movable_player.set_blocked_direction(blocked_direction)

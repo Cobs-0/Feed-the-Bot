@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://hxlo3mgcx8ud" path="res://player/player.tscn" id="2_player"]
 [ext_resource type="Texture2D" uid="uid://dnj3qpjj7sumf" path="res://assets/New/lantern.png" id="4_rgvjd"]
 [ext_resource type="PackedScene" uid="uid://dd2i64ja0rav" path="res://Npcs/miner.tscn" id="5_3edhx"]
+[ext_resource type="FontFile" uid="uid://bjhs7xdy20oyf" path="res://Fonts/Ithaca-LVB75.ttf" id="5_so5xg"]
 [ext_resource type="Script" uid="uid://bs87hffpovu00" path="res://Npcs/miner.gd" id="6_rgvjd"]
 
 [sub_resource type="Gradient" id="Gradient_light"]
@@ -18,6 +19,10 @@ fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lantern"]
 size = Vector2(50, 50)
+
+[sub_resource type="LabelSettings" id="LabelSettings_uc8vw"]
+font = ExtResource("5_so5xg")
+shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
 size = Vector2(102, 188)
@@ -85,6 +90,7 @@ offset_top = -60.0
 offset_right = 20.0
 offset_bottom = -37.0
 text = "EXIT"
+label_settings = SubResource("LabelSettings_uc8vw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exit" unique_id=1744578761]
 shape = SubResource("RectangleShape2D_exit")
