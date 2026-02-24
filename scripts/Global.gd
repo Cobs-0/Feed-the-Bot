@@ -17,6 +17,7 @@ var world_state = {
 	"fence_destroyed": false,
 	"cave_exited": false,
 	"water_inspected": false,
+	"water_sucked": false,
 	"bridge_built": false,
 	"artist_deposited": false,
 	"hoover_filled_with_water": false,
@@ -25,5 +26,7 @@ var world_state = {
 	"petrol_collected": false,
 	"guard_down": false,
 	"rock_collected": false,
-	"mountain_collapsed": false
+	"mountain_collapsed": false,
+	"world_darkened_by_house_exit": false,
+	"world_reddened_by_mountain_collapse": false
 }

@@ -2,8 +2,10 @@ extends Node2D
 
 var player_in_range: bool = false
 @onready var area_2d: Area2D = $Area2D
+@onready var water_collision_shape: CollisionShape2D = $Area2D/CollisionShape2D # New onready var
 @onready var bridge_sprite_onready: Sprite2D = $Area2D/BridgeSprite
 @onready var water_suck_animation: AnimatedSprite2D = find_parent("World").get_node("Globe")
+
 @onready var ai_animated_sprite: AnimatedSprite2D = find_parent("World").get_node("Globe/AI/AnimatedSprite2D")
 @onready var ai_dialogue_label: Label = find_parent("World").get_node("Globe/AI/AI_Dialogue")
 @onready var interact_label: Label = get_tree().root.find_child("InteractLabel", true, false)
@@ -14,6 +16,14 @@ var wipe_shader = preload("res://assets/shaders/wipe.gdshader")
 
 
 func _ready() -> void:
+	# If water has already been sucked up, disable its interaction
+	if Global.world_state.get("water_sucked", false):
+		if area_2d:
+			area_2d.monitorable = false
+			area_2d.input_pickable = false
+			water_collision_shape.disabled = true # Disable collision
+		# Do NOT hide area_2d
+		
 	if bridge_sprite_onready:
 		bridge_sprite = bridge_sprite_onready
 	else:
@@ -195,27 +205,31 @@ func _on_area_exited(area: Area2D) -> void:
 			world.set_blocked_direction(0.0)
 
 func _on_water_suck_animation_finished() -> void:
-	if water_suck_animation.animation_finished.is_connected(_on_water_suck_animation_finished):
-		water_suck_animation.animation_finished.disconnect(_on_water_suck_animation_finished)
-	
-	water_suck_animation.stop() # Stops animation, holds last frame
-	water_suck_animation.frame = water_suck_animation.sprite_frames.get_frame_count("Water") - 1 # Explicitly set final frame
-	
-	Global.world_state["hoover_filled_with_water"] = true # Set flag that Hoover is filled
-	Global.world_state["water_sucked"] = true # Keep this for general water state tracking
-	
-	# AI dialogue "Give me that!" persists for a short duration
-	if ai_dialogue_label and ai_animated_sprite:
-		get_tree().create_timer(3.0).timeout.connect(func():
-			ai_dialogue_label.visible = false
-			ai_animated_sprite.play("Idle")
-		)
-	
-	if interact_label and player_in_range:
-		interact_label.text = "Hoover is filled with water!"
-		interact_label.visible = true
-		get_tree().create_timer(2.0).timeout.connect(func():
-			interact_label.visible = false
-		)
-	
-	# Removed: water_suck_animation.visible = false
+		if water_suck_animation.animation_finished.is_connected(_on_water_suck_animation_finished):
+			water_suck_animation.animation_finished.disconnect(_on_water_suck_animation_finished)
+		
+		water_suck_animation.stop() # Stops animation, holds last frame
+		water_suck_animation.frame = water_suck_animation.sprite_frames.get_frame_count("Water") - 1 # Explicitly set final frame (no water)
+		Global.world_state["hoover_filled_with_water"] = true # Set flag that Hoover is filled
+		Global.world_state["water_sucked"] = true # Keep this for general water state tracking
+		
+		if area_2d:
+			area_2d.monitorable = false
+			area_2d.input_pickable = false
+			water_collision_shape.disabled = true # Disable collision
+		
+		# AI dialogue "Give me that!" persists for a short duration
+		if ai_dialogue_label and ai_animated_sprite:
+			get_tree().create_timer(3.0).timeout.connect(func():
+				ai_dialogue_label.visible = false
+				ai_animated_sprite.play("Idle")
+			)
+		
+		if interact_label and player_in_range:
+			interact_label.text = "Hoover is filled with water!"
+			interact_label.visible = true
+			get_tree().create_timer(2.0).timeout.connect(func():
+				interact_label.visible = false
+			)
+		
+		# Removed: water_suck_animation.visible = false

@@ -90,6 +90,7 @@ text = "EXIT"
 shape = SubResource("RectangleShape2D_exit")
 
 [node name="Miner" parent="." unique_id=2091854405 instance=ExtResource("5_3edhx")]
+texture_filter = 1
 position = Vector2(89.51, 0)
 script = ExtResource("6_rgvjd")
 

@@ -1,8 +1,9 @@
-[gd_scene format=3 uid="uid://dd8f68e9f2g7"]
+[gd_scene format=3 uid="uid://dd8f68faf2g7"]
 
-[ext_resource type="Script" path="res://Cloud/cloud.gd" id="1_cloud_script"]
+[ext_resource type="Script" uid="uid://byk1kelu0d1pn" path="res://Cloud/cloud.gd" id="1_cloud_script"]
 
-[node name="Cloud" type="Node2D"]
+[node name="Cloud" type="Node2D" unique_id=92239551]
 script = ExtResource("1_cloud_script")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1873004633]
+texture_filter = 1

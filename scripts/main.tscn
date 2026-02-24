@@ -4,9 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://dygb0f2ob28k0" path="res://World/world.tscn" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://hxlo3mgcx8ud" path="res://player/player.tscn" id="2_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://cu82lin82xnch" path="res://assets/New/Tube.png" id="2_irwmq"]
-[ext_resource type="Script" uid="uid://c45akomgnlfsc" path="res://Cloud/CloudManager.gd" id="4_0nr8p"]
+[ext_resource type="FontFile" uid="uid://bjhs7xdy20oyf" path="res://Fonts/Ithaca-LVB75.ttf" id="6_kv812"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_0xm2m"]
+font = ExtResource("6_kv812")
 
 [node name="Main" type="Node2D" unique_id=372716763]
 script = ExtResource("0_main_script")
@@ -14,6 +15,9 @@ script = ExtResource("0_main_script")
 [node name="World" parent="." unique_id=190776170 instance=ExtResource("1_0xm2m")]
 position = Vector2(1, 380)
 rotation_speed = 1.0
+
+[node name="Globe" parent="World" index="0" unique_id=508770498]
+
 
 [node name="Forrest" parent="World/Globe/Ground" parent_id_path=PackedInt32Array(190776170, 667570290) index="0" unique_id=455049850]
 position = Vector2(285, -285)
@@ -41,13 +45,9 @@ texture = ExtResource("2_irwmq")
 [node name="AI_Dialogue" parent="World/Globe/AI" parent_id_path=PackedInt32Array(190776170, 1674827496) index="2" unique_id=207112091]
 text = "FEED ME!"
 
-[node name="Funnel" parent="World/Globe" parent_id_path=PackedInt32Array(190776170, 508770498) index="2" unique_id=2014763869]
+[node name="Funnel" parent="World/Globe" index="2" unique_id=2014763869]
 position = Vector2(-100, -400)
 rotation = -0.2443461
-
-[node name="CloudManager" type="Node2D" parent="World" unique_id=1894252528]
-script = ExtResource("4_0nr8p")
-num_clouds = 15
 
 [node name="Player" parent="." unique_id=686447817 instance=ExtResource("2_0xm2m")]
 
@@ -63,6 +63,7 @@ z_index = 3
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1725672648]
 
 [node name="InteractLabel" type="Label" parent="CanvasLayer" unique_id=300526199]
+texture_filter = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bxxj8iglt8ihx" path="res://Npcs/artist.gd" id="1_v6vof"]
 [ext_resource type="Texture2D" uid="uid://c7gyitdeg23he" path="res://assets/Miner/Miner_upward.png" id="2_673dd"]
 [ext_resource type="Texture2D" uid="uid://o3f7y6lx26ye" path="res://assets/Miner/Miner_downward.png" id="3_57pq3"]
+[ext_resource type="FontFile" uid="uid://bjhs7xdy20oyf" path="res://Fonts/Ithaca-LVB75.ttf" id="4_673dd"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p6iep"]
 animations = [{
@@ -20,6 +21,9 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h1wyg"]
 size = Vector2(160, 72)
+
+[sub_resource type="LabelSettings" id="LabelSettings_57pq3"]
+font = ExtResource("4_673dd")
 
 [node name="Miner" type="Node2D" unique_id=2091854405]
 script = ExtResource("1_v6vof")
@@ -43,6 +47,7 @@ offset_left = -100.0
 offset_top = -100.0
 offset_right = 140.0
 offset_bottom = -50.0
+label_settings = SubResource("LabelSettings_57pq3")
 horizontal_alignment = 1
 autowrap_mode = 2
 

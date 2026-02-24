@@ -2,12 +2,16 @@
 
 [ext_resource type="Script" uid="uid://0cjxac418k5g" path="res://World/guard.gd" id="1_co6rx"]
 [ext_resource type="Texture2D" uid="uid://cj0eifd42yro2" path="res://assets/Guard.png" id="1_j5ahr"]
+[ext_resource type="FontFile" uid="uid://bjhs7xdy20oyf" path="res://Fonts/Ithaca-LVB75.ttf" id="3_u6e0o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vupwf"]
 size = Vector2(40.384277, 65.76717)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h1wyg"]
 size = Vector2(39, 72)
+
+[sub_resource type="LabelSettings" id="LabelSettings_fwgbd"]
+font = ExtResource("3_u6e0o")
 
 [node name="Guard" type="Node2D" unique_id=1234227054]
 script = ExtResource("1_co6rx")
@@ -32,5 +36,6 @@ offset_left = -100.0
 offset_top = -100.0
 offset_right = 140.0
 offset_bottom = -50.0
+label_settings = SubResource("LabelSettings_fwgbd")
 horizontal_alignment = 1
 autowrap_mode = 2

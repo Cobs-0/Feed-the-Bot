@@ -44,7 +44,7 @@ func pick_up() -> void:
 func talk() -> void:
 	is_talking = true
 	artist_sprite.play("Talk")
-	dialogue_label.text = "What happened to the trees?, I loved those tree since I was a child!"
+	dialogue_label.text = "What happened to the trees?, I loved those trees since I was a child!"
 	
 	# Wait for 3 seconds
 	await get_tree().create_timer(3.0).timeout

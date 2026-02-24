@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ddlfavgbwvflg" path="res://assets/Artist/Painting.png" id="1_txy1b"]
 [ext_resource type="Texture2D" uid="uid://ct2hl1is10uvd" path="res://assets/Artist/Artist_closed.png" id="2_714op"]
 [ext_resource type="Texture2D" uid="uid://cpfwsqm7dvd4g" path="res://assets/Artist/Artist_open.png" id="3_e14b6"]
+[ext_resource type="FontFile" uid="uid://bjhs7xdy20oyf" path="res://Fonts/Ithaca-LVB75.ttf" id="5_e14b6"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_b5tpc"]
 animations = [{
@@ -29,6 +30,9 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h1wyg"]
 size = Vector2(69, 72)
+
+[sub_resource type="LabelSettings" id="LabelSettings_b5tpc"]
+font = ExtResource("5_e14b6")
 
 [node name="Artist" type="Node2D" unique_id=1234227054]
 script = ExtResource("1_script")
@@ -58,6 +62,7 @@ offset_left = -100.0
 offset_top = -100.0
 offset_right = 140.0
 offset_bottom = -50.0
+label_settings = SubResource("LabelSettings_b5tpc")
 horizontal_alignment = 1
 autowrap_mode = 2
 

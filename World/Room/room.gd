@@ -25,7 +25,7 @@ func _ready() -> void:
 	interact_label.visible = false
 	
 	if Global.world_state.get("hoover_collected", false):
-		lantern_node.hide()
+		lantern_node.queue_free()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
@@ -39,7 +39,7 @@ func _input(event: InputEvent) -> void:
 func collect_hoover() -> void:
 	if movable_player.has_method("collect_item"):
 		if movable_player.collect_item(hoover_item_resource):
-			lantern_node.hide()
+			lantern_node.queue_free()
 			interact_label.text = ""
 			interact_label.visible = false
 			Global.world_state["hoover_collected"] = true # Set flag that Hoover is collected
@@ -50,6 +50,7 @@ func collect_hoover() -> void:
 func exit_room(exit_id: String) -> void:
 	Global.world_state["exited_house"] = true
 	Global.world_state["last_exit_id"] = exit_id
+	Global.world_state["world_darkened_by_house_exit"] = true # Set flag for darkening world
 	
 	# Set world rotation based on which exit was used
 	if exit_id == "Exit1":

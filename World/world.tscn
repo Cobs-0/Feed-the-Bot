@@ -1,19 +1,18 @@
 [gd_scene format=3 uid="uid://dygb0f2ob28k0"]
 
 [ext_resource type="Script" uid="uid://da6ur8eb61w1a" path="res://World/world.gd" id="1_8a836"]
-[ext_resource type="Texture2D" uid="uid://d4h0ymjk43wal" path="res://assets/Water Globe/globe1.png" id="2_dqu5g"]
-[ext_resource type="Texture2D" uid="uid://srgsy5xk5rk" path="res://assets/New/globe.png" id="2_h2aik"]
+[ext_resource type="Texture2D" uid="uid://cdip2kw3qnugk" path="res://assets/Water Globe/New/globe1.png" id="2_yfuda"]
+[ext_resource type="Texture2D" uid="uid://8kgrtoed5ep3" path="res://assets/Water Globe/New/globe2.png" id="3_i8dl0"]
 [ext_resource type="PackedScene" uid="uid://3tqighbanrjr" path="res://World/forrest.tscn" id="3_j8job"]
-[ext_resource type="Texture2D" uid="uid://0i2i3nrj236i" path="res://assets/Water Globe/globe2.png" id="3_o6lw0"]
 [ext_resource type="PackedScene" uid="uid://crug10fx8q1ny" path="res://World/mountains.tscn" id="4_3f78f"]
-[ext_resource type="Texture2D" uid="uid://dfosvijtje83x" path="res://assets/Water Globe/globe3.png" id="4_x0pyu"]
-[ext_resource type="Texture2D" uid="uid://dgud0w86t808o" path="res://assets/Water Globe/globe4.png" id="5_dg1ng"]
+[ext_resource type="Texture2D" uid="uid://dyoct4gv4ab3k" path="res://assets/Water Globe/New/globe3.png" id="4_jf64p"]
+[ext_resource type="Texture2D" uid="uid://br6htu71kqesb" path="res://assets/Water Globe/New/globe4.png" id="5_rw02v"]
 [ext_resource type="PackedScene" uid="uid://e48dqeu0e685" path="res://World/funnel.tscn" id="5_yf0ba"]
+[ext_resource type="Texture2D" uid="uid://d18udodaxn836" path="res://assets/Water Globe/New/globe5.png" id="6_3sd22"]
 [ext_resource type="PackedScene" uid="uid://dibsd4w3aqfgi" path="res://World/fence.tscn" id="6_eidgh"]
-[ext_resource type="Texture2D" uid="uid://c8s7fsiupqnfo" path="res://assets/Water Globe/globe5.png" id="6_yfuda"]
-[ext_resource type="Texture2D" uid="uid://oe3a2sxlouu7" path="res://assets/Water Globe/globe6.png" id="7_i8dl0"]
 [ext_resource type="PackedScene" uid="uid://c856jox12fncy" path="res://Npcs/artist.tscn" id="7_oe8m4"]
-[ext_resource type="Texture2D" uid="uid://ds3vl5kgjn1fn" path="res://assets/Water Globe/globe7.png" id="8_jf64p"]
+[ext_resource type="Texture2D" uid="uid://6x38vxe7l2p" path="res://assets/Water Globe/New/globe6.png" id="7_s5a7k"]
+[ext_resource type="Texture2D" uid="uid://c6vlcuk6iyudj" path="res://assets/Water Globe/New/globe7.png" id="8_koyeq"]
 [ext_resource type="Script" uid="uid://b5efqndc77wot" path="res://World/water.gd" id="8_water"]
 [ext_resource type="PackedScene" uid="uid://dpjvxwoy7ld4m" path="res://World/House.tscn" id="9_0wqet"]
 [ext_resource type="Texture2D" uid="uid://cojvsvvmxtsat" path="res://assets/bridge.png" id="9_lo5ox"]
@@ -24,32 +23,32 @@
 [ext_resource type="PackedScene" uid="uid://dag4ifiy8n8u0" path="res://World/guard.tscn" id="15_f23eu"]
 [ext_resource type="PackedScene" uid="uid://cn7r7yw05nwcs" path="res://World/petrol.tscn" id="18_x0pyu"]
 [ext_resource type="PackedScene" uid="uid://8go2dkxhocts" path="res://World/rock.tscn" id="19_dg1ng"]
-[ext_resource type="Script" uid="uid://1z5y7x9w2v8u" path="res://Cloud/CloudManager.gd" id="20_cloud_manager_script"]
-[ext_resource type="PackedScene" uid="uid://dd8f68e9f2g7" path="res://Cloud/cloud.tscn" id="21_cloud_scene"]
+[ext_resource type="Script" uid="uid://c45akomgnlfsc" path="res://Cloud/CloudManager.gd" id="20_cloud_manager_script"]
+[ext_resource type="FontFile" uid="uid://bjhs7xdy20oyf" path="res://Fonts/Ithaca-LVB75.ttf" id="23_yfuda"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rw02v"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_dqu5g")
+"texture": ExtResource("2_yfuda")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_o6lw0")
+"texture": ExtResource("3_i8dl0")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_x0pyu")
+"texture": ExtResource("4_jf64p")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_dg1ng")
+"texture": ExtResource("5_rw02v")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_yfuda")
+"texture": ExtResource("6_3sd22")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_i8dl0")
+"texture": ExtResource("7_s5a7k")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_jf64p")
+"texture": ExtResource("8_koyeq")
 }],
 "loop": false,
 "name": &"Water",
@@ -90,14 +89,15 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="LabelSettings" id="LabelSettings_i8dl0"]
+font = ExtResource("23_yfuda")
+
 [node name="World" type="Node2D" unique_id=1413212604]
 script = ExtResource("1_8a836")
 
 [node name="Globe" type="AnimatedSprite2D" parent="." unique_id=508770498]
 z_index = 2
 sprite_frames = SubResource("SpriteFrames_rw02v")
-animation = &"Water"
-frame_progress = 0.8860859
 
 [node name="Ground" type="Path2D" parent="Globe" unique_id=667570290]
 curve = SubResource("Curve2D_j8job")
@@ -175,6 +175,7 @@ offset_right = 220.0
 offset_bottom = 18.0
 text = "Sample Text...
 This is a Talking AI"
+label_settings = SubResource("LabelSettings_i8dl0")
 
 [node name="FeedingCam" type="Camera2D" parent="Globe/AI" unique_id=1616085159]
 ignore_rotation = false
@@ -185,18 +186,14 @@ position = Vector2(0, -400)
 
 [node name="CloudManager" type="Node2D" parent="." unique_id=123456789]
 script = ExtResource("20_cloud_manager_script")
-cloud_scene = ExtResource("21_cloud_scene")
 num_clouds = 15
-cloud_y_offset = -200.0
-cloud_speed_min = 0.005
-cloud_speed_max = 0.02
+
+[node name="WorldCanvasModulate" type="CanvasModulate" parent="." unique_id=987654321]
 
 [node name="GlobeStatic" type="Sprite2D" parent="." unique_id=1867934222]
 visible = false
 texture_filter = 1
-texture = ExtResource("2_h2aik")
-texture_filter = 1
-texture = ExtResource("2_h2aik")
+texture = ExtResource("8_koyeq")
 
 [editable path="Globe/Ground/Forrest"]
 [editable path="Globe/Ground/Mountains"]

@@ -8,4 +8,4 @@ script = ExtResource("1_1dv6m")
 name = "Rock"
 texture = ExtResource("2_1dv6m")
 ai_dialogue = "Nice Shot!"
-visual_scale = 0.1
+visual_scale = 0.05

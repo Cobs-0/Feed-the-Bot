@@ -8,6 +8,8 @@ extends Node2D
 @onready var ai_dialogue: Label = $Globe/AI/AI_Dialogue
 @onready var Globe: AnimatedSprite2D = $Globe # Added reference to the Globe node
 
+@onready var world_canvas_modulate: CanvasModulate = $WorldCanvasModulate # Added for world darkening
+
 var is_feeding: bool = false
 var blocked_direction: float = 0.0 # 1: right, -1: left
 var following_fireball: Node2D = null
@@ -17,7 +19,10 @@ func set_blocked_direction(dir: float) -> void:
 	blocked_direction = dir
 
 func _ready() -> void:
+
+
 	Globe.rotation = Global.world_state["world_rotation"] # Applied rotation to Globe
+	
 	if feeding_cam:
 		feeding_cam.enabled = false
 		cam_original_pos = feeding_cam.position
@@ -52,7 +57,20 @@ func _ready() -> void:
 				# Optionally wait for animation to finish if needed
 				# await animated_sprite.animation_finished
 		Global.world_state["mountain_collapsed"] = true # Persist the collapsed state
+		Global.world_state["world_reddened_by_mountain_collapse"] = true # Set flag for reddening world
 		# Global.world_state["exited_cave_after_guard_down"] = false # Removed: this flag should not reset here
+
+	# New logic for world darkening after exiting house
+	if Global.world_state.get("world_darkened_by_house_exit", false):
+		_apply_house_exit_effects(true) # Apply instantly on scene load if flag is set
+
+	# New logic for world reddening after mountain collapse
+	if Global.world_state.get("world_reddened_by_mountain_collapse", false):
+		_apply_mountain_collapse_effects(true) # Apply instantly on scene load if flag is set
+		
+	if Globe:
+		Globe.animation = &"Water" # Ensure animation is set
+		call_deferred("_set_globe_water_state")
 		
 func _process(delta: float) -> void:
 	if following_fireball:
@@ -206,3 +224,49 @@ func paint_bridge_cinematic(water_node: Node) -> void:
 	
 	Global.world_state["artist_deposited"] = true
 	is_feeding = false
+
+func _apply_house_exit_effects(instant: bool = false) -> void:
+	var target_world_color = Color(0.9, 0.85, 0.7) # Less saturated, yellowish
+	var tween_duration = 2.0
+	
+	if instant:
+		world_canvas_modulate.color = target_world_color
+	else:
+		var world_tween = create_tween()
+		world_tween.tween_property(world_canvas_modulate, "color", target_world_color, tween_duration)
+
+
+func _apply_mountain_collapse_effects(instant: bool = false) -> void:
+	var target_world_color = Color(1.0, 0.7, 0.7) # Reddish tint, slightly desaturated
+	var target_ai_color = Color.RED
+	var tween_duration = 2.0
+	
+	if instant:
+		world_canvas_modulate.color = target_world_color
+		ai_sprite.modulate = target_ai_color
+	else:
+		var world_tween = create_tween()
+		world_tween.tween_property(world_canvas_modulate, "color", target_world_color, tween_duration)
+		
+		var ai_tween = create_tween()
+		ai_tween.tween_property(ai_sprite, "modulate", target_ai_color, tween_duration)
+		
+func _set_globe_water_state():
+	if Globe and Globe is AnimatedSprite2D: # Check if Globe is still valid and correct type in deferred call
+		if Globe.sprite_frames == null:
+			print("World.gd _set_globe_water_state(): ERROR: Globe.sprite_frames is null during deferred call!")
+			return
+		elif not Globe.sprite_frames.has_animation(&"Water"):
+			print("World.gd _set_globe_water_state(): ERROR: 'Water' animation not found in Globe.sprite_frames during deferred call!")
+			return
+
+		if Global.world_state.get("water_sucked", false): # If water has been sucked (implies NO water visually, so show last frame)
+			Globe.frame = Globe.sprite_frames.get_frame_count("Water") - 1 # Set to last frame (no water)
+			Globe.set_deferred("playing", false) # Hold last frame
+			print("World.gd _set_globe_water_state(): Water sucked. Globe.frame set to:", Globe.frame)
+		else: # If water has NOT been sucked (implies WATER PRESENT visually, so show first frame)
+			Globe.frame = 0 # Set to first frame (water present)
+			Globe.set_deferred("playing", false) # Hold first frame
+			print("World.gd _set_globe_water_state(): Water present. Globe.frame set to:", Globe.frame)
+	else:
+		print("World.gd _set_globe_water_state(): ERROR: Globe is not a valid AnimatedSprite2D during deferred call!")
