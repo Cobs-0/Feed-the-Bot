@@ -1,4 +1,4 @@
-extends Node2D # Root node is now Node2D, consistent with other world objects
+extends Node2D 
 
 var player_in_range: bool = false
 @onready var _dialogue_label: Label = $GuardCollisionBody/DialogueLabel
@@ -7,9 +7,21 @@ var player_in_range: bool = false
 @onready var _collision_shape: CollisionShape2D = $GuardCollisionBody/CollisionShape2D
 @onready var _guard_sprite: Sprite2D = $GuardCollisionBody/Area2D/Sprite2D
 @onready var interact_label: Label = get_tree().root.find_child("InteractLabel", true, false)
-@onready var world_node: Node2D = get_tree().root.find_child("World", true, false) # Add world_node reference
+@onready var world_node: Node2D = get_tree().root.find_child("World", true, false) 
+
+var voice_player: AudioStreamPlayer2D
+var sfx_player: AudioStreamPlayer2D
+var is_talking: bool = false
 
 func _ready() -> void:
+	voice_player = AudioStreamPlayer2D.new()
+	add_child(voice_player)
+	voice_player.stream = load("res://assets/SFX/Voices/Guard.wav")
+	
+	sfx_player = AudioStreamPlayer2D.new()
+	add_child(sfx_player)
+	sfx_player.stream = load("res://assets/SFX/Hit.wav")
+	
 	_dialogue_label.visible = false
 	
 	if _area_2d:
@@ -18,24 +30,43 @@ func _ready() -> void:
 		if not _area_2d.area_exited.is_connected(_on_area_exited):
 			_area_2d.area_exited.connect(_on_area_exited)
 	
-	# Guard state if already knocked down
 	if Global.world_state.get("guard_down", false):
 		_guard_sprite.rotation_degrees = 90
-		_guard_sprite.position = _guard_sprite.position + Vector2(25, 25) # Apply position adjustment on load
+		_guard_sprite.position = _guard_sprite.position + Vector2(25, 25) 
 		if _collision_shape:
 			_collision_shape.disabled = true
 		_dialogue_label.visible = false
 		player_in_range = false 
 
+func say(text: String, duration: float = 3.0) -> void:
+	is_talking = true
+	_dialogue_label.text = text
+	_dialogue_label.visible = true
+	_play_voice_loop(duration)
+	
+	await get_tree().create_timer(duration).timeout
+	
+	if not player_in_range:
+		_dialogue_label.visible = false
+	is_talking = false
+
+func _play_voice_loop(duration: float) -> void:
+	var end_time = Time.get_ticks_msec() + int(duration * 1000)
+	while Time.get_ticks_msec() < end_time and is_talking:
+		voice_player.pitch_scale = randf_range(0.7, 0.9) # Deeper voice for guard
+		voice_player.play()
+		await voice_player.finished
+		if not is_talking: break
+		await get_tree().create_timer(0.05).timeout
+
 func _input(event: InputEvent) -> void:
-	if not player_in_range or Global.world_state.get("guard_down", false): return # Don't react if guard is down
+	if not player_in_range or Global.world_state.get("guard_down", false): return 
 
 	if event.is_action_pressed("interact"):
 		var player_node = get_tree().root.find_child("Player", true, false)
 		if player_node and Global.current_item and Global.current_item.name == "Rock":
 			_hit_with_rock(player_node)
 		else:
-			# Player interacts but doesn't have a rock
 			if interact_label and not Global.world_state.get("guard_down", false):
 				interact_label.text = "You need something to get past the Guard."
 				interact_label.visible = true
@@ -48,8 +79,7 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.name == "PlayerArea":
 		player_in_range = true
 		if not Global.world_state.get("guard_down", false):
-			_dialogue_label.text = "You can't get past sir... It's dangerous."
-			_dialogue_label.visible = true
+			say("You can't get past sir... It's dangerous.")
 			if interact_label:
 				interact_label.text = "Press E to Interact"
 				interact_label.visible = true
@@ -73,16 +103,19 @@ func _on_area_exited(area: Area2D) -> void:
 func _hit_with_rock(player_node: Node2D) -> void:
 	Global.world_state["guard_down"] = true
 	
+	if sfx_player:
+		sfx_player.play()
+	
 	if player_node.has_method("drop_item"):
-		player_node.drop_item() # Remove the rock from player's inventory
+		player_node.drop_item() 
 
 	_guard_sprite.rotation_degrees = 90
-	_guard_sprite.position = _guard_sprite.position + Vector2(25, 25) # Position adjustment (corrected)
+	_guard_sprite.position = _guard_sprite.position + Vector2(25, 25) 
 
 	if _collision_shape:
 		_collision_shape.disabled = true
 	
-	_dialogue_label.visible = false # Hide Guard's own dialogue
+	_dialogue_label.visible = false 
 
 	if interact_label:
 		interact_label.text = "You knocked out the guard!"

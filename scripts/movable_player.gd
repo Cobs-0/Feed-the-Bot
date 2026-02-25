@@ -5,11 +5,15 @@ extends CharacterBody2D
 
 const SPEED = 300.0
 var _blocked_direction: float = 0.0
+var audio_player: AudioStreamPlayer2D
 
 func set_blocked_direction(dir: float) -> void:
 	_blocked_direction = dir
 
 func _ready() -> void:
+	audio_player = AudioStreamPlayer2D.new()
+	add_child(audio_player)
+	audio_player.stream = load("res://assets/SFX/Pickup.wav")
 	update_inventory_visuals()
 
 func _physics_process(delta: float) -> void:
@@ -22,11 +26,10 @@ func _physics_process(delta: float) -> void:
 		velocity.x = direction * SPEED
 		player_sprite.flip_h = direction < 0
 		player_sprite.play("Walk")
-		inventory.position = Vector2(10 * direction, 0) # Position for facing direction
+		inventory.position = Vector2(10 * direction, 0) 
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		player_sprite.play("Idle")
-		# Ensure inventory position is consistent even when idle
 		inventory.position = Vector2(10 * (1 if not player_sprite.flip_h else -1), 0)
 		
 	move_and_slide()
@@ -37,6 +40,8 @@ func collect_item(item: Item) -> bool:
 		
 	if Global.current_item == null:
 		Global.current_item = item
+		if audio_player:
+			audio_player.play()
 		update_inventory_visuals()
 		return true
 	return false

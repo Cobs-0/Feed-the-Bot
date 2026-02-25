@@ -7,8 +7,13 @@ var interact_label: Label
 var player_in_range: bool = false
 var is_chopped: bool = false
 var player_ref: Node2D = null
+var audio_player: AudioStreamPlayer2D
 
 func _ready() -> void:
+	audio_player = AudioStreamPlayer2D.new()
+	add_child(audio_player)
+	audio_player.stream = load("res://assets/SFX/Chop.wav")
+	
 	interact_label = get_tree().root.find_child("InteractLabel", true, false)
 	if interact_label:
 		interact_label.visible = false
@@ -33,11 +38,12 @@ func chop_down() -> void:
 			
 		if wood_item:
 			player_ref.collect_item(wood_item)
+			if audio_player:
+				audio_player.play()
 			is_chopped = true
 			Global.world_state["chopped_trees"].append(get_path())
 			sprite.texture = load("res://assets/New/chopped_forrest.png")
 			
-			# "Collision"
 			var world = get_tree().root.find_child("World", true, false)
 			if world and world.has_method("set_blocked_direction"):
 				world.set_blocked_direction(0.0)

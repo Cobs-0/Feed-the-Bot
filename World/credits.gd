@@ -8,36 +8,27 @@ func _ready() -> void:
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	self.set_size(get_viewport_rect().size)
 	
-	# Initial states
 	main_label.modulate.a = 0.0
 	with_help_label.visible = false
 	title_sprite.modulate.a = 0.0
 	
-	# Center the title sprite
 	title_sprite.position = get_viewport_rect().size / 2
 	
-	# Start animation
 	play_credits_animation()
 
 func play_credits_animation() -> void:
-	# 1. Show Title Sprite
 	var title_tween = create_tween()
 	title_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	
-	# Fade in Title
 	title_tween.tween_property(title_sprite, "modulate:a", 1.0, 1.0)
-	# Wait 3 seconds
 	title_tween.tween_interval(3.0)
-	# Fade out Title
 	title_tween.tween_property(title_sprite, "modulate:a", 0.0, 1.0)
 	
 	await title_tween.finished
 	
-	# 2. Start Label Scroll
 	var scroll_duration = 8.0
 	var viewport_size = get_viewport_rect().size
 	
-	# Prepare labels
 	main_label.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
 	with_help_label.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
 	
@@ -45,7 +36,7 @@ func play_credits_animation() -> void:
 	var target_main_y = viewport_size.y * 0.2
 	
 	main_label.position.y = initial_main_y
-	main_label.modulate.a = 1.0 # Make visible for scroll
+	main_label.modulate.a = 1.0 
 	
 	with_help_label.visible = true
 	with_help_label.modulate.a = 0.0

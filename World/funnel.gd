@@ -2,13 +2,18 @@ extends Node2D
 
 var interact_label: Label
 @onready var sprite: Sprite2D = $Area2D/FunnelSprite
-@onready var ai_animated_sprite: AnimatedSprite2D = get_tree().root.find_child("World", true, false).get_node("Globe/AI/AnimatedSprite2D") # New AI reference
-@onready var ai_dialogue_label: Label = get_tree().root.find_child("World", true, false).get_node("Globe/AI/AI_Dialogue") # New AI reference
+@onready var ai_animated_sprite: AnimatedSprite2D = get_tree().root.find_child("World", true, false).get_node("Globe/AI/AnimatedSprite2D") 
+@onready var ai_dialogue_label: Label = get_tree().root.find_child("World", true, false).get_node("Globe/AI/AI_Dialogue") 
 
 var player_in_range: bool = false
 var player_ref: Node2D = null
+var audio_player: AudioStreamPlayer2D
 
 func _ready() -> void:
+	audio_player = AudioStreamPlayer2D.new()
+	add_child(audio_player)
+	audio_player.stream = load("res://assets/SFX/Funnel.wav")
+	
 	interact_label = get_tree().root.find_child("InteractLabel", true, false)
 	if interact_label:
 		interact_label.visible = false
@@ -44,7 +49,6 @@ func deposit() -> void:
 			)
 		return
 
-	# New logic: Prevent dumping empty Hoover
 	if current_item_in_inventory.name == "Hoover" and not Global.world_state.get("hoover_filled_with_water", false):
 		if ai_dialogue_label and ai_animated_sprite:
 			ai_dialogue_label.text = "I don't want that!"
@@ -54,46 +58,39 @@ func deposit() -> void:
 				ai_dialogue_label.visible = false
 				ai_animated_sprite.play("Idle")
 			)
-		if interact_label: # Clear interact label after AI speaks
+		if interact_label: 
 			interact_label.visible = false
-		return # Prevent deposit of empty Hoover
+		return 
 		
 	var success = false
-	var item_for_feeding = current_item_in_inventory # Default item to feed
+	var item_for_feeding = current_item_in_inventory 
 
-	# Check for filled Hoover
 	if current_item_in_inventory.name == "Hoover" and Global.world_state.get("hoover_filled_with_water", false):
-		# Special handling for filled Hoover (water)
 		
-		# Drop Hoover from player inventory (to re-add empty one)
 		if player_ref and player_ref.has_method("drop_item"):
 			player_ref.drop_item() 
 			success = true
 		
-		# Reset the Hoover filled state
 		Global.world_state["hoover_filled_with_water"] = false
 		
-		# Prepare item to pass to AI (representing water)
-		item_for_feeding = load("res://items/hoover.tres").duplicate() # Use hoover.tres as base
-		item_for_feeding.name = "Water" # Set name to trigger specific dialogue in AI
+		item_for_feeding = load("res://items/hoover.tres").duplicate() 
+		item_for_feeding.name = "Water" 
 
-		# We do NOT re-collect the empty hoover here, as per user's request.
-		# It's taken out of inv.
 		
 	else:
-		# Generic item deposit (e.g., wood, empty Hoover, etc.)
 		if player_ref and player_ref.has_method("drop_item"):
-			player_ref.drop_item() # This sets Global.current_item to null and updates visuals
+			player_ref.drop_item() 
 			success = true
 	
 	if success:
+		if audio_player:
+			audio_player.play()
 		if interact_label:
 			interact_label.visible = false
 		
-		# Start feeding sequence
 		var world = get_tree().root.find_child("World", true, false)
 		if world and world.has_method("start_feeding_sequence"):
-			world.start_feeding_sequence(item_for_feeding) # Pass the determined item
+			world.start_feeding_sequence(item_for_feeding) 
 	else:
 		if interact_label:
 			interact_label.text = "Failed to deposit " + current_item_in_inventory.name

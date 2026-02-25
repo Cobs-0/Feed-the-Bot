@@ -7,9 +7,13 @@ extends Node2D
 
 var player_in_range: bool = false
 var is_talking: bool = false
+var voice_player: AudioStreamPlayer2D
 
 func _ready() -> void:
-	# Only spawn if cave has been exited
+	voice_player = AudioStreamPlayer2D.new()
+	add_child(voice_player)
+	voice_player.stream = load("res://assets/SFX/Voices/Artist.wav")
+	
 	if not Global.world_state["cave_exited"] or Global.world_state["artist_deposited"]:
 		hide()
 		$Area2D/CollisionShape2D.set_deferred("disabled", true)
@@ -46,12 +50,21 @@ func talk() -> void:
 	artist_sprite.play("Talk")
 	dialogue_label.text = "What happened to the trees?, I loved those trees since I was a child!"
 	
-	# Wait for 3 seconds
+	_play_voice_loop(3.0)
 	await get_tree().create_timer(3.0).timeout
 	
 	artist_sprite.play("Idle")
 	dialogue_label.text = ""
 	is_talking = false
+
+func _play_voice_loop(duration: float) -> void:
+	var end_time = Time.get_ticks_msec() + int(duration * 1000)
+	while Time.get_ticks_msec() < end_time and is_talking:
+		voice_player.pitch_scale = randf_range(0.9, 1.1)
+		voice_player.play()
+		await voice_player.finished
+		if not is_talking: break
+		await get_tree().create_timer(0.05).timeout
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if area.name == "PlayerArea":

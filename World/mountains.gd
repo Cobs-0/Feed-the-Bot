@@ -2,8 +2,13 @@ extends Node2D
 
 var interact_label: Label
 var player_in_range: bool = false
+var audio_player: AudioStreamPlayer2D
 
 func _ready() -> void:
+	audio_player = AudioStreamPlayer2D.new()
+	add_child(audio_player)
+	audio_player.stream = load("res://assets/SFX/Pickup.wav") # Transition sound
+	
 	interact_label = get_tree().root.find_child("InteractLabel", true, false)
 	
 
@@ -11,7 +16,6 @@ func _input(event: InputEvent) -> void:
 	if player_in_range:
 		if event.is_action_pressed("interact"):
 			if Global.world_state.get("mountain_collapsed", false):
-				# Mountain has collapsed, cannot enter
 				if interact_label:
 					interact_label.text = "Cave entrance blocked."
 					interact_label.visible = true
@@ -24,6 +28,8 @@ func _input(event: InputEvent) -> void:
 func enter_cave() -> void:
 	if Global.world_state.get("guard_down", false):
 		Global.world_state["entered_cave_after_guard_down"] = true
+	
+	Global.play_sfx("res://assets/SFX/Pickup.wav")
 	get_tree().change_scene_to_file("res://World/cave.tscn")
 
 func _on_area_2d_area_entered(area: Area2D) -> void:

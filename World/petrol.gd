@@ -22,7 +22,7 @@ func _input(event: InputEvent) -> void:
 func collect_petrol() -> void:
 	if player_ref and player_ref.has_method("collect_item"):
 		if player_ref.collect_item(petrol_item_resource):
-			queue_free() # Delete the petrol node from the scene
+			queue_free() 
 			interact_label.text = ""
 			interact_label.visible = false
 			Global.world_state["petrol_collected"] = true

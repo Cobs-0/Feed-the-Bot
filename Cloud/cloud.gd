@@ -27,14 +27,11 @@ var cloud_textures = [
 ]
 
 func _ready() -> void:
-    randomize() # Ensure random number generator is seeded
+    randomize() 
     
-    # Set random texture
     sprite.texture = cloud_textures[randi() % cloud_textures.size()]
     
-    # Randomize scale
     var random_scale = randf_range(0.5, 1.5)
     sprite.scale = Vector2(random_scale, random_scale)
     
-    # Randomize rotation (optional, but adds variation)
     sprite.rotation_degrees = randf_range(-10, 10)

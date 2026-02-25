@@ -60,7 +60,10 @@ text = "With Help:
 Aimee Mulcahy
 Ailbhe Ni Chomhghain
 Mathew Newell
-Rachel O'Connor"
+Rachel O'Connor
+
+Music By:
+fluidvolt"
 label_settings = SubResource("LabelSettings_j0e6k")
 horizontal_alignment = 1
 vertical_alignment = 1

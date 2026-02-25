@@ -3,15 +3,20 @@ extends Node2D
 @onready var interact_label: Label = $CanvasLayer/InteractLabel
 @onready var player: Node2D = $Player
 @export var lantern_item: Item = load("res://items/lantern.tres")
-@onready var main_camera: Camera2D = $Camera2D # Added for camera shake
-@onready var miner_node: Node2D = $Miner # Added for miner dialogue
+@onready var main_camera: Camera2D = $Camera2D 
+@onready var miner_node: Node2D = $Miner 
 
 var near_lantern: bool = false
 var near_exit: bool = false
 var lantern_collected: bool = false
-var blocked_direction: float = 0.0 # 1: right, -1: left
+var blocked_direction: float = 0.0 
+var audio_player: AudioStreamPlayer2D
 
 func _ready() -> void:
+	audio_player = AudioStreamPlayer2D.new()
+	add_child(audio_player)
+	audio_player.stream = load("res://assets/SFX/Pickup.wav")
+	
 	interact_label.text = ""
 	if Global.world_state["lantern_collected"]:
 		lantern_collected = true
@@ -19,16 +24,11 @@ func _ready() -> void:
 		$CanvasModulate.color = Color.BLACK
 		$Player/PlayerLight.show()
 		
-	# New logic for guard interaction
 	if Global.world_state.get("entered_cave_after_guard_down", false):
+		if miner_node and miner_node.has_method("say"):
+			miner_node.say("Ahhhh! Whats that Racket!?", 2.0)
 		_shake_camera()
-		if miner_node and miner_node.has_node("DialogueLabel"):
-			var miner_dialogue_label = miner_node.get_node("DialogueLabel")
-			if miner_dialogue_label:
-				miner_dialogue_label.text = "Ahhhh! Whats that Racket!?"
-				await get_tree().create_timer(2.0).timeout # Shorter duration for exclamation
-				miner_dialogue_label.text = ""
-		Global.world_state["entered_cave_after_guard_down"] = false # Reset the flag
+		Global.world_state["entered_cave_after_guard_down"] = false 
 
 
 func _process(delta: float) -> void:
@@ -58,11 +58,9 @@ func collect_lantern() -> void:
 			$Lantern.hide()
 			interact_label.text = ""
 			
-			# Miner reaction
 			if $Miner.has_method("say_pickup_line"):
 				$Miner.say_pickup_line()
 				
-			# Darkness effect
 			$CanvasModulate.color = Color.BLACK
 			$Player/PlayerLight.show()
 		else:
@@ -72,10 +70,10 @@ func exit_cave() -> void:
 	Global.world_state["world_rotation"] = -1.3
 	Global.world_state["cave_exited"] = true
 	
-	# New logic for guard interaction on exit
 	if Global.world_state.get("guard_down", false):
 		Global.world_state["exited_cave_after_guard_down"] = true
 		
+	Global.play_sfx("res://assets/SFX/Pickup.wav")
 	get_tree().change_scene_to_file("res://scripts/main.tscn")
 
 func _on_lantern_area_entered(area: Area2D) -> void:
@@ -120,9 +118,21 @@ func _shake_camera() -> void:
 	var shake_strength = 10.0
 	var shake_duration = 0.5
 
+	if audio_player:
+		audio_player.stream = load("res://assets/SFX/Collaps.wav")
+		audio_player.play()
+
 	var tween = create_tween()
-	for i in range(50): # Shake multiple times
+	for i in range(50): 
 		tween.tween_property(main_camera, "offset", original_offset + Vector2(randf_range(-shake_strength, shake_strength), randf_range(-shake_strength, shake_strength)), shake_duration / 5.0)
 		tween.tween_property(main_camera, "offset", original_offset, shake_duration / 5.0)
+		tween.parallel().tween_callback(func():
+			if audio_player: 
+				audio_player.pitch_scale = randf_range(0.8, 1.2)
+				if not audio_player.playing: audio_player.play()
+		)
+	
 	await tween.finished
-	main_camera.offset = original_offset # Ensure it ends at original position
+	main_camera.offset = original_offset 
+	if audio_player:
+		audio_player.stop()

@@ -43,29 +43,24 @@ func _fuel_rocket() -> void:
 	var ai_cam = world_node.find_child("FeedingCam", true, false)
 	var player_cam = null
 	
-	var player_node = world_node.find_child("Player", true, false) # Renamed to player_node to avoid conflict with 'player' variable
+	var player_node = world_node.find_child("Player", true, false) 
 	if player_node:
 		var player_area = player_node.find_child("PlayerArea", true, false)
 		if player_area:
 			var player_sprite = player_area.find_child("PlayerSprite", true, false)
 			if player_sprite:
-				player_cam = player_sprite.find_child("Camera2D2", true, false) # Corrected path
+				player_cam = player_sprite.find_child("Camera2D2", true, false) 
 		if player_node.has_method("drop_item"):
-			player_node.drop_item() # Call drop_item to clear inventory and update visuals
+			player_node.drop_item() 
 
 	if ai_cam:
 		ai_cam.enabled = true
 		ai_cam.make_current()
 
-	if ai_dialogue_label and ai_animated_sprite:
-		ai_dialogue_label.text = petrol_dialogue if petrol_dialogue != "" else "That's some good fuel!"
-		ai_dialogue_label.visible = true
-		ai_animated_sprite.play("Talk")
-
-		await get_tree().create_timer(4.0).timeout # Use await for the delay
-
-		ai_dialogue_label.visible = false
-		ai_animated_sprite.play("Idle")
+	var world = get_tree().root.find_child("World", true, false)
+	if world and world.has_method("say_ai"):
+		var text = petrol_dialogue if petrol_dialogue != "" else "That's some good fuel!"
+		await world.say_ai(text, 2.0)
 	
 	if player_cam:
 		player_cam.make_current()
@@ -73,7 +68,7 @@ func _fuel_rocket() -> void:
 		ai_cam.enabled = false
 
 	if interact_label:
-		interact_label.visible = false # Hide during dialogue
+		interact_label.visible = false 
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.name == "PlayerArea":
