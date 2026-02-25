@@ -36,11 +36,7 @@ func _ready() -> void:
 			ai_sprite.play("Talk")
 			
 			get_tree().create_timer(3.0).timeout.connect(func():
-				if Global.world_state.get("water_sucked", false): # Keep thirsty if water sucked
-					ai_dialogue.text = "MMMM, I need more than just that"
-					ai_dialogue.visible = true
-				else:
-					ai_dialogue.visible = false
+				ai_dialogue.visible = false
 				ai_sprite.play("Idle")
 			)
 			
@@ -73,11 +69,18 @@ func _ready() -> void:
 		call_deferred("_set_globe_water_state")
 		
 func _process(delta: float) -> void:
+	if Global.ending_triggered:
+		return
+		
 	if following_fireball:
 		feeding_cam.global_position = following_fireball.global_position
 		return
 		
 	if is_feeding:
+		return
+		
+	if all_flags_true():
+		start_ending_sequence()
 		return
 		
 	var direction := Input.get_axis("move_left", "move_right")
@@ -89,6 +92,132 @@ func _process(delta: float) -> void:
 		Globe.rotation -= direction * rotation_speed * delta # Applied rotation to Globe
 		Global.world_state["world_rotation"] = Globe.rotation # Store Globe's rotation
 
+func all_flags_true() -> bool:
+	var required_flags = [
+		"lantern_collected",
+		"fence_destroyed",
+		"cave_exited",
+		"water_inspected",
+		"water_sucked",
+		"bridge_built",
+		"artist_deposited",
+		"hoover_collected",
+		"rocket_fueled",
+		"petrol_collected",
+		"guard_down",
+		"rock_collected",
+		"mountain_collapsed",
+		"world_darkened_by_house_exit",
+		"world_reddened_by_mountain_collapse"
+	]
+	for flag in required_flags:
+		if not Global.world_state.get(flag, false):
+			return false
+	return true
+
+func start_ending_sequence() -> void:
+	Global.ending_triggered = true
+	is_feeding = true # Block other interactions
+	
+	# Wait 5 seconds
+	await get_tree().create_timer(5.0).timeout
+	
+	# Switch to WideCam
+	var wide_cam = $Globe/AI/WideCam
+	if wide_cam:
+		wide_cam.enabled = true
+		wide_cam.make_current()
+	elif feeding_cam:
+		feeding_cam.enabled = true
+		feeding_cam.make_current()
+	
+	if ai_sprite:
+		ai_sprite.play("Talk")
+	
+	if ai_dialogue:
+		ai_dialogue.text = "HAHAHA I FEEL SO POWERFUL,
+BUT I NEED MORE...
+I NEED MORE NOW"
+		ai_dialogue.visible = true
+	
+	await get_tree().create_timer(5.0).timeout
+	
+	if ai_sprite:
+		ai_sprite.play("Idle")
+	
+	start_vacuum_effect()
+
+func start_vacuum_effect() -> void:
+	var funnel = $Globe/Funnel
+	var funnel_sprite = funnel.find_child("FunnelSprite", true, false)
+	var player = get_tree().root.find_child("Player", true, false)
+	
+	if player:
+		player.set_physics_process(false)
+		player.set_process(false)
+		player.set_process_input(false)
+		# Try to stop player animations if any
+		var player_sprite = player.find_child("AnimatedSprite2D", true, false)
+		if player_sprite:
+			player_sprite.stop()
+	
+	# Funnel no longer spins
+	
+	# Get all targets
+	var targets = []
+	# Suck up everything on the ground
+	for child in $Globe/Ground.get_children():
+		targets.append(child)
+		child.set_process(false)
+		child.set_physics_process(false)
+	
+	if player:
+		targets.append(player)
+		
+	var vacuum_tween = create_tween()
+	vacuum_tween.set_parallel(true)
+	
+	var funnel_pos = funnel.global_position
+	
+	for target in targets:
+		if target == funnel: continue
+		
+		# Move towards funnel and scale down
+		vacuum_tween.tween_property(target, "global_position", funnel_pos, 4.0)\
+			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+		vacuum_tween.tween_property(target, "scale", Vector2.ZERO, 4.0)\
+			.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+			
+	await vacuum_tween.finished
+	
+	if ai_dialogue:
+		ai_dialogue.text = "I AM THE WORLD
+NOW."
+		ai_dialogue.visible = true
+		
+	await get_tree().create_timer(3.0).timeout
+	
+	# Add new AI dialogue
+	if ai_dialogue:
+		ai_dialogue.text = "Shite, How am I going to steal more stuff now?"
+		ai_dialogue.visible = true
+	await get_tree().create_timer(3.0).timeout
+	
+	if ai_dialogue:
+		ai_dialogue.text = "Must have Hallucinated..."
+		ai_dialogue.visible = true
+	await get_tree().create_timer(3.0).timeout
+		
+	get_tree().paused = true # Pause the game
+	visible = false # Hide the World node (which contains the Globe/planet)
+	
+	# Instantiate credits scene
+	var credits_layer = CanvasLayer.new()
+	credits_layer.name = "CreditsLayer"
+	get_tree().root.add_child(credits_layer)
+	
+	var credits_scene = load("res://World/credits.tscn").instantiate()
+	credits_layer.add_child(credits_scene)
 func start_feeding_sequence(item) -> void:
 	is_feeding = true
 	
@@ -115,7 +244,7 @@ func start_feeding_sequence(item) -> void:
 		elif item_name == "Water": # Specific dialogue for water
 			ai_dialogue.text = "MMMM, I need more than just that"
 			ai_dialogue.visible = true
-			await get_tree().create_timer(2.0).timeout # Keep dialogue for a short time
+			await get_tree().create_timer(4.0).timeout # Keep dialogue for a short time
 		else:
 			ai_dialogue.text = custom_dialogue
 			ai_dialogue.visible = true
@@ -141,9 +270,13 @@ func start_feeding_sequence(item) -> void:
 	
 	var player = get_tree().root.find_child("Player", true, false)
 	if player:
-		var player_cam = player.find_child("Camera2D", true, false)
-		if player_cam:
-			player_cam.make_current()
+		var player_area = player.find_child("PlayerArea", true, false)
+		if player_area:
+			var player_sprite = player_area.find_child("PlayerSprite", true, false)
+			if player_sprite:
+				var player_cam = player_sprite.find_child("Camera2D2", true, false)
+				if player_cam:
+					player_cam.make_current()
 	
 	if feeding_cam:
 		feeding_cam.enabled = false

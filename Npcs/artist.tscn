@@ -33,6 +33,8 @@ size = Vector2(69, 72)
 
 [sub_resource type="LabelSettings" id="LabelSettings_b5tpc"]
 font = ExtResource("5_e14b6")
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 1)
 
 [node name="Artist" type="Node2D" unique_id=1234227054]
 script = ExtResource("1_script")

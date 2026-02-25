@@ -45,7 +45,11 @@ func _fuel_rocket() -> void:
 	
 	var player_node = world_node.find_child("Player", true, false) # Renamed to player_node to avoid conflict with 'player' variable
 	if player_node:
-		player_cam = player_node.find_child("Camera2D", true, false)
+		var player_area = player_node.find_child("PlayerArea", true, false)
+		if player_area:
+			var player_sprite = player_area.find_child("PlayerSprite", true, false)
+			if player_sprite:
+				player_cam = player_sprite.find_child("Camera2D2", true, false) # Corrected path
 		if player_node.has_method("drop_item"):
 			player_node.drop_item() # Call drop_item to clear inventory and update visuals
 

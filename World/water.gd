@@ -76,6 +76,9 @@ func _input(event: InputEvent) -> void:
 			
 			# Play WaterSucker animation
 			if water_suck_animation:
+				# Ensure signal is disconnected before connecting to prevent multiple connections
+				if water_suck_animation.animation_finished.is_connected(_on_water_suck_animation_finished):
+					water_suck_animation.animation_finished.disconnect(_on_water_suck_animation_finished)
 				water_suck_animation.play("Water")
 				water_suck_animation.animation_finished.connect(_on_water_suck_animation_finished)
 				if interact_label:
@@ -102,7 +105,11 @@ func inspect_water() -> void:
 	
 	var player = world_node.find_child("Player", true, false)
 	if player:
-		player_cam = player.find_child("Camera2D", true, false)
+		var player_area = player.find_child("PlayerArea", true, false)
+		if player_area:
+			var player_sprite = player_area.find_child("PlayerSprite", true, false)
+			if player_sprite:
+				player_cam = player_sprite.find_child("Camera2D2", true, false) # Corrected path
 
 	if ai_cam:
 		ai_cam.enabled = true

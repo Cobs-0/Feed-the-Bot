@@ -7,6 +7,5 @@
 script = ExtResource("1_item")
 name = "Lantern"
 texture = ExtResource("2_13y7i")
-ai_dialogue = "The light of the
-righteous rejoices"
+ai_dialogue = "Let me light the way."
 visual_scale = 0.05

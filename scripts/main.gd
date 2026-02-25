@@ -24,6 +24,15 @@ func _ready() -> void:
 		# Ensure movement is not blocked from previous scene
 		if world_node.has_method("set_blocked_direction"):
 			world_node.set_blocked_direction(0.0)
+	
+	# Explicitly make player camera current
+	var player_area = player_node.find_child("PlayerArea", true, false)
+	if player_area:
+		var player_sprite = player_area.find_child("PlayerSprite", true, false)
+		if player_sprite:
+			var player_cam = player_sprite.find_child("Camera2D2", true, false)
+			if player_cam:
+				player_cam.make_current()
 
 func set_ai_dialogue(text: String) -> void:
 	if ai_dialogue_label:

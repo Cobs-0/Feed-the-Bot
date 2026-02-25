@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://cot0measre35c"]
+
+[ext_resource type="FontFile" uid="uid://bjhs7xdy20oyf" path="res://Fonts/Ithaca-LVB75.ttf" id="1_j0e6k"]
+[ext_resource type="Script" uid="uid://3ibo14l217vu" path="res://World/credits.gd" id="1_lbpu3"]
+[ext_resource type="Texture2D" uid="uid://rnx3h3tqdbt6" path="res://assets/Title.png" id="3_i46g5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_lbpu3"]
+font = ExtResource("1_j0e6k")
+font_size = 64
+
+[sub_resource type="LabelSettings" id="LabelSettings_j0e6k"]
+font = ExtResource("1_j0e6k")
+font_size = 48
+
+[node name="Credits" type="Control" unique_id=1927223038]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_lbpu3")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=600462582]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MainLabel" type="Label" parent="ColorRect" unique_id=1601084325]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -132.0
+offset_top = -28.0
+offset_right = 132.0
+offset_bottom = 28.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "CIAN O'BRIEN"
+label_settings = SubResource("LabelSettings_lbpu3")
+
+[node name="With Help" type="Label" parent="ColorRect" unique_id=1886268813]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -132.0
+offset_top = -28.0
+offset_right = 132.0
+offset_bottom = 28.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "With Help:
+Aimee Mulcahy
+Ailbhe Ni Chomhghain
+Mathew Newell
+Rachel O'Connor"
+label_settings = SubResource("LabelSettings_j0e6k")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="ColorRect" unique_id=862838156]
+texture_filter = 1
+scale = Vector2(5.703125, 5.703125)
+texture = ExtResource("3_i46g5")

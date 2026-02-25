@@ -30,3 +30,5 @@ var world_state = {
 	"world_darkened_by_house_exit": false,
 	"world_reddened_by_mountain_collapse": false
 }
+
+var ending_triggered = false
